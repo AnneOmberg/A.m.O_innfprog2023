@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 1 Betinget logikk</title>
+</head>
+<body>
+    <p id="skrift"></p>
+
+    <script>
+        const name = "Anne M."
+        let utskrift = ""
+
+        
+//Bruker tempLit for å gjøre det enklere!!!
+        if(name === "Anne M."){
+            utskrift=`Mitt navn er ${name} Omberg`
+        }
+        else{
+            utskrift=`Navnet mitt er ikke ${name} Omberg`
+        }
+
+        // if(name === "Anne"){
+        //     utskrift="Mitt navn er " + name + " Omberg"
+        // }
+        // else{
+        //     utskrift="Mitt navn er ikke " + name + " Omberg"
+        // }
+
+        console.log(utskrift)
+
+        document.getElementById("skrift").innerHTML = utskrift
+    </script>    
+</body>
+</html>

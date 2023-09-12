@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="variables.css">
+    <title>Konkatinering cheet sheet</title>
+</head>
+<body>
+    <p id="mailStandard"></p>
+    <p id="mailTempLit"></p>
+
+    <script>
+        const name = "Anne M. Omberg"
+        const mail = "annemni@hiof.no"
+
+//Standard konkatinering med plusstegn
+        const mailCodeStandard = "<a href='mailto:" + mail + "'>Send epost til " + name + "<a>"
+        document.getElementById("mailStandard").innerHTML = mailCodeStandard 
+//FUNGERER OGSÅ MED:
+//'<a href="mailto:EPOSTADRESSE">Send epost til NAVN<a>'
+//"<a href="\mailto:EPOSTADRESSE">Send epost til NAVN<a>""
+
+
+//Template literals
+    const mailCodeTempLit = `<a href="mailto:${mail}">Send epost til ${name}</a>`
+//Mange fordeler å bruke tamplate lit, siden man kan ha hele funksjoner i {} mm. 
+    document.getElementById("mailTempLit").innerHTML = mailCodeTempLit
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>If3</title>
+</head>
+<body>
+    <p id="utskrift"></p>
+    <script>
+        const barn1 = "jente"
+        const barn2 = "gutt"
+        const barn3 = "jente"
+
+        let antall_gutter = 0
+        let antall_jenter = 0
+
+        if(barn1 === "jente") { antall_jenter++ } else { antall_gutter++ }
+        //Samme test for barn2, med ternary operator
+
+        barn2 === "jente" ? antall_jenter++ : antall_gutter++
+        barn3 === "jente" ? antall_jenter++ : antall_gutter++
+
+        document.getElementById("utskrift").innerHTML = `Gutter: ${antall_gutter}. Jenter: ${antall_jenter}.`
+    </script>
+    
+</body>
+</html>

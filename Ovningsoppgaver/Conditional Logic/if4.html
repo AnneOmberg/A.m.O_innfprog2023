@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>If4</title>
+</head>
+<body>
+    <p id="utskrift"></p>
+    <script>
+        const ITF19019_grade = "A"
+        const ITF10511_grade = "C"
+
+        const ITF19019_passed = ITF19019_grade === "F" ? false : true
+        const ITF10511_passed = ITF10511_grade === "F" ? false : true
+
+        let countPassed = 0
+
+        //ITF19019 med tradisjonell if (tenger ikke skrive mer enn taggen her, true er unødvendig)
+        if(ITF19019_passed === true){
+            countPassed++
+        }
+        //ITF10511 som en ternary operator
+        ITF10511_passed ? countPassed++ : null
+
+        const printText = `Du har bestått ${countPassed} av 2 kurs`
+
+        document.getElementById("utskrift").innerHTML = printText
+    </script>
+    
+</body>
+</html>

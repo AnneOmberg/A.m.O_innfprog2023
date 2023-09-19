@@ -8,7 +8,7 @@
     <style>
         body { background:  #7a918f;}
         section { width: 90%; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between;}
-        article { width: 31%; background: #ffffff; border: 1px solid #aac3be;}
+        article { width: 31%; background: #ffffff; border: 5px solid #9bb9b3;}
         article img { width: 100%; height: auto;}
         h2, p{ margin-left: 1rem;}
     </style>
@@ -16,11 +16,11 @@
 <body>
     <h1> Photo Gallery</h1>
     <section id="gallery">
-        <!-- <article>
-            <img src="https://images.unsplash.com/photo-1694304804759-7c738ce19586" alt="Moose" />
-            <h2>Moose</h2>
-            <p>Photographer: Santonii</p>
-        </article> -->
+
+    </section>
+    <h2>Natur</h2>
+    <section id="categoryimages">
+        
     </section>
     <script>
         //All pictures fetched with permission from unsplash.comss
@@ -59,12 +59,23 @@ const photogallery = [
     
 ]
 
-    console.log(photogallery) 
     photogallery.map(photo => document.getElementById("gallery").innerHTML += `<article>
             <img src="${photo.imageURL}" alt="${photo.title}" />
             <h2>${photo.title}</h2>
             <p>Photographer: ${photo.photographer}</p>
         </article>`)
+
+        const categoryImages = photogallery.filter(image => image.category === "Nature")
+
+        categoryImages.map(catimage => document.getElementById("categoryimages").innerHTML += `
+        <article>
+            <img src="${catimage.imageURL}" alt="${catimage.title}" />
+            <h2>${catimage.title}</h2>
+            <p>Photographer: ${catimage.photographer}</p>
+        </article>`)
+
+        console.log(categoryImages)
+        //""item section index tag
     </script>
     
 </body>

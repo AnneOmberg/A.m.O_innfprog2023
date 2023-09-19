@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loops Cheat Sheet</title>
+    <style>
+        *{
+            font-family: 'helvetica', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h2>Nedtelling fra 10</h2>
+    <section id="countdown"></section>
+
+    <h2>Alle femmerne mellom 50 og 100</h2>
+    <section id="fives"></section>
+
+    <h2>The sum of the hundred</h2>
+    <p id="hundred"></p>
+
+    <h2>Tall delelig på 7</h2>
+    <p id="seven"></p>
+
+    <script>
+        for(let teller = 10; teller >= 0; teller--) {
+            document.getElementById("countdown").innerHTML += `<p>${teller}</p>`
+        }
+
+        for(let teller = 50; teller <= 100; teller = teller + 5) {
+            document.getElementById("fives").innerHTML += teller + ", "
+        }
+
+        let whileteller = 1
+        while(whileteller < 20) {
+            document.getElementById ("fives").innerHTML += `<p>${whileteller}</p>`
+            whileteller++
+        }
+        //Bruk en for-lørre for å legge sammen alle rallebe fra 1 til 100
+        //Utskriften skal være 1 + 2 + 3 .... + 100 = SUM
+        let sum = 0
+        const max = 60
+        for(let tall = 1; tall <= max; tall++) {
+            sum += tall
+            console.log(sum)
+            if(tall < max){
+                document.getElementById("hundred").innerHTML += tall + " + " 
+            } else {
+                document.getElementById("hundred").innerHTML += tall + " = " + sum
+            }
+            
+        }
+
+        // Vi ønsker og skrive ut alle tall mellom 1 og 100 som er delelig på 7
+        for(let tall = 1; tall <= 100; tall++){
+        if(tall % 7 === 0) {
+            document.getElementById("seven").innerHTML += tall + ", "
+        }
+        }
+    </script>
+</body>
+</html>

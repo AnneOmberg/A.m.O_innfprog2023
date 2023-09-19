@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="utskrift"></p>
+    <script>
+        const dyr = [
+            "Katt", "Sjøløve", "Flaggermus", "Slange", "Fisk", "Reinsdyr", "Fugl", "Hund", "Dovendyr", "Elefant"
+        ]
+        const animals = [
+            "Cat", "Sealion", "Bat", "Snake", "Fish", "Raideer", "Bird", "Dog", "Sloth", "Elephant"
+        ]
+
+        const translate = `${dyr[0]} er et nydelig kjeledyr og heter ${animals[0]} på engelsk. ${dyr[3]} er også et nydelig kjeledyr og heter ${animals[3]} på engelsk.`
+
+        document.getElementById("utskrift").innerHTML = translate
+    </script>    
+</body>
+</html>

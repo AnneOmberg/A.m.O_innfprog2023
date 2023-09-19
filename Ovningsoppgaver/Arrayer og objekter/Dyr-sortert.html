@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sortert</title>
+</head>
+<body>
+    <p id="utskrift"></p>
+    <script>
+        const dyr = [
+            "Katt", "Sjøløve", "Flaggermus", "Slange", "Fisk", "Reinsdyr", "Fugl", "Hund", "Dovendyr", "Elefant"
+        ]
+
+        dyr.push("Rev", "Frosk")
+
+        dyr.sort()
+
+        const antallDyr = dyr.length
+
+        document.getElementById("utskrift").innerHTML = dyr + " (antall dyr " + antallDyr + ")"
+
+        console.log("Antall dyr i listeoversikten: " + antallDyr)
+    </script>
+    
+</body>
+</html>

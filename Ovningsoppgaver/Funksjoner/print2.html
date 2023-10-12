@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="name"></p>
+    <p id="mail"></p>
+    <p id="age"></p>
+
+    <script>
+        function printing(name, mail, birthYear) {
+            document.getElementById("name").innerHTML = name            
+            document.getElementById("mail").innerHTML = `<a href="mailto:${mail}">${mail}</a>`
+            const age = 2023 - birthYear
+            document.getElementById("age").innerHTML = age
+            
+        }
+
+        printing("Anne", "annemni@hiof.no", 1997)
+
+
+        // function print(name, mail, birthYear) {
+
+        //     document.getElementById("name").innerHTML = "Anne"
+        //     document.getElementById("mail").innerHTML = "annemni@hiof.no"
+        //     document.getElementById("age").innerHTML = 2023 - birthYear
+        // }
+
+        // print("name", "mail", 1997)
+    </script>
+    
+</body>
+</html>

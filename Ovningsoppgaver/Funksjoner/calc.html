@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .red { color: rgb(192, 22, 90)}
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <ul id="result"></ul>
+
+    <script>
+        function calculator(numb1 = 0, numb2 = 0) {
+            const pluss = numb1 + numb2
+            const minus = numb1 - numb2
+            const devide = numb1 / numb2
+            const multiply = numb1 * numb2
+
+            // document.getElementById("result").innerHTML = `
+            // <li>${numb1} + ${numb2} = ${pluss}</li>
+            // <li>${numb1} - ${numb2} = ${minus}</li>
+            // <li>${numb1} / ${numb2} = ${devide}</li>
+            // <li>${numb1} * ${numb2} = ${multiply}</li>
+            // `
+
+            document.getElementById("result").innerHTML = `
+            <li ${pluss < 0 ? "class='red'" : null}>${numb1} + ${numb2} = ${pluss}</li>
+            <li ${minus < 0 ? "class='red'" : null}>${numb1} - ${numb2} = ${minus}</li>
+            <li ${devide < 0 ? "class='red'" : null}>${numb1} / ${numb2} = ${devide}</li>
+            <li ${multiply < 0 ? "class='red'" : null}>${numb1} * ${numb2} = ${multiply}</li>
+            `
+            
+        }
+        calculator(2, 3)
+
+    </script>
+
+</body>
+</html>

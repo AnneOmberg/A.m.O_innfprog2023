@@ -10,7 +10,7 @@
 <body>
     <header>
         <h1>InnfProg Oblig 2</h1>
-        <button id="toggleMenu" aria-label="Open the menu">Menu <img src="menuicon.png" aria-hidden="true"></button>
+        <button id="toggleMenu" aria-label="Open the menu">Menu <img alt="menuknapp" src="menuicon.png" aria-hidden="true"></button>
         <nav id="menu">
             <!-- Eksempel: oppbygging av meny -->
             <ul>
@@ -60,28 +60,42 @@
 
         //Variabel for meny-HTML
         //TODO: Skal ikke starte som en tom streng, må inneholde noe HTML for å møte oppgaveteksten...
-        let menuHTML = `noe HTML`
+        let menuHTML = 
+            `<ul>
+                <li><a href="index.html">Home</a></li>
+            </ul>`
 
         //Gå gjennom første nivå av menupoints-array
-        menuPoints.map(category => {document.getElementById("menu").innerHTML += 
-            `<ul>
-            <h2>${category.menuheader}</h2>
-                <li>
-                    <a href="${category.url}">${category.menutext}</a>
-                </li>
-            </ul>`
+        menuPoints.map(category => {menuHTML
+            += 
+        //TODO: Forbered HTML med overskrift og listestart   
+            `<h2>${category.menuheader}</h2>
+            <ul>`
+        //TODO: Gå gjennom array på andre nivå (menulinks)
+        category.menulinks.map((linker) => {menuHTML
+            +=
+        //TODO: For hver menulink: fyll menuHTML med listeelementer og link
+            `<li>
+                    <a href="${linker.url}">${linker.menutext}</a>
+            </li>`
+                       
+        })
+        //TODO: Avslutt liste
+        menuHTML += `</ul>`
         })
      
-            //TODO: Forbered HTML med overskrift og listestart
             
-            //TODO: Gå gjennom array på andre nivå (menulinks)
-            //TODO: For hver menulink: fyll menuHTML med listeelementer og link
             
-            //TODO: Avslutt liste
+            
+            
+            
+            
 
-        //TODO: Skriv ut HTML til <nav>:
-            console.log(menuPoints)
         
+            console.log(menuPoints)
+            console.log(menuHTML)
+        //TODO: Skriv ut HTML til <nav>:
+        document.getElementById("menu").innerHTML = menuHTML
     </script>
 </body>
 </html>

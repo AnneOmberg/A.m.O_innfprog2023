@@ -19,18 +19,17 @@
 
         //innlastningskontroll
         let heroImageLoaded = false
-        //sjekker at bildeobjekt er lastet i nettleser
-        heroImage.onload = () => {heroImageLoaded = true}
-        //gi oss selv en feilmeld derso bildeobjektet ikke klarer å laste
-        heroImageLoaded? console.log("bildeobjekt lastet") : console.log("Bildeobjektet ikke lastet")
-
         //Lager vi et bildeobject
         const heroImage = new Image()
         //angi hvilken bildefil som skal tegnes i canvas
         heroImage.src = "superhero.png"
-        //Tegne bilde til canvas
-        ctx.fillRect(100,100,100,100)
-        ctx.drawImage(heroImage, 600, 100)
+        //sjekker at bildeobjekt er lastet i nettleser
+        heroImage.onload = () => {
+            heroImageLoaded = true
+            ctx.drawImage(heroImage, 100, 100)
+        }
+        //gi oss selv en feilmeld derso bildeobjektet ikke klarer å laste
+        heroImageLoaded? console.log("bildeobjekt lastet") : console.log("Bildeobjektet ikke lastet")        
 
     </script>
     

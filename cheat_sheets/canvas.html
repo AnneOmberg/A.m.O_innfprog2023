@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Cheat Sheet</title>
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+            background: #76babe;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        canvas {
+            background: rgb(64, 64, 64);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="drawingArea"></canvas>
+
+    <script>
+        //Hente canvas-elementet
+        const canvas = document.getElementById("drawingArea")
+        //Sette høyde og bredde på canvas:
+        canvas.width = 800
+        canvas.height = 600
+        //Sette kontekst på canvas
+        const ctx = canvas.getContext("2d")
+
+        //Tegne en strek
+        ctx.beginPath()
+        ctx.moveTo(100, 100)
+        ctx.lineTo(300, 300)
+        //Må si farge før stroke!!!
+        ctx.strokeStyle = "#008087"
+        ctx.lineWidth = 5
+        ctx.stroke()
+        ctx.closePath()
+
+        //Tegne firkanter
+        ctx.fillRect(500, 400, 300, 200)
+        // const rect = {width: 200, height: 300}
+        // ctx.fillRect(canvas.width - rect.width, canvas.height - rect.height, rect.width, rect.height)
+        ctx.strokeStyle = "rgb(200, 121, 171)"
+        ctx.strokeRect(497.5, 2.5, 300, 200)
+
+        //Tegne en sirkel
+        ctx.beginPath()
+        ctx.arc(150, 450, 50, 0, 2 * Math.PI)
+        ctx.fillStyle = "rgb(213, 159, 23)"
+        ctx.fill()
+        ctx.strokeStyle = "rgb(133, 80, 0)"
+        ctx.stroke()
+        ctx.closePath()
+
+        ctx.beginPath()
+        ctx.arc(150, 450, 60, 0, 2 * Math.PI)
+        ctx.fillStyle = "rgb(213, 159, 23)"
+        ctx.fill()
+        ctx.strokeStyle = "rgb(133, 80, 0)"
+        ctx.stroke()
+        ctx.closePath()
+
+        //Tegne tekst
+        ctx.beginPath()
+        ctx.fillStyle = "rgb(133, 80, 0)"
+        ctx.font = "30px Candara"
+        ctx.fillText("10kr,-", 115, 460)
+        ctx.closePath()
+    </script>
+
+</body>
+</html>

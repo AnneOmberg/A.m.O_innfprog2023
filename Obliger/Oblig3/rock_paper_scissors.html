@@ -145,6 +145,10 @@
         </div>
         <div id="counterBox">
             <div>Number of games played: <span id="counter">0</span></div>
+            <!-- opg 6 -->
+            <div>Number of games won: <span id="pW">0</span></div>
+            <div>Number of games lost: <span id="cW">0</span></div>
+            <div>Number of draws: <span id="draw">0</span></div>
             <!-- A hidden button to show after a game, that resets and let the player play again -->
             <button id="replay" onClick="restartGame()">Play again</button>
         </div>
@@ -155,6 +159,10 @@
         let winner = ""
         //And prepare a counter-variable for number of games played:
         let counter = 0
+
+        let playerWins = 0
+        let computerWins = 0
+        let draws = 0
         //Make available signs available in code as an array
         const signs = ["rock", "paper", "scissors"]
         
@@ -218,51 +226,66 @@
             computer.innerHTML = "Computer selects " + computerSign
             // Ok, now we have to check for rules! Paper beats rock, rock beat scissors, scissors beat paper.
             // This means if players sign beat computer sign, player wins. Lets try:
-            if(playerSign === "paper") {
-                if(computerSign === "rock") {
-                    winner = "player"
-                }
-                if(computerSign === "scissors") {
-                    winner = "computer"
-                }
-                if(computerSign === "paper") {
-                    winner = "undecided"
-                }
-            }
-            if(playerSign === "rock") {
-                if(computerSign === "rock") {
-                    winner = "undecided"
-                }
-                if(computerSign === "scissors") {
-                    winner = "player"
-                }
-                if(computerSign === "paper") {
-                    winner = "computer"
-                }
-            }
-            if(playerSign === "scissors") {
-                if(computerSign === "rock") {
-                    winner = "computer"
-                }
-                if(computerSign === "scissors") {
-                    winner = "undecided"
-                }
-                if(computerSign === "paper") {
-                    winner = "player"
-                }
-            }
+            // if(playerSign === "paper") {
+            //     if(computerSign === "rock") {
+            //         winner = "player"
+            //     }
+            //     if(computerSign === "scissors") {
+            //         winner = "computer"
+            //     }
+            //     if(computerSign === "paper") {
+            //         winner = "undecided"
+            //     }
+            // }
+            // if(playerSign === "rock") {
+            //     if(computerSign === "rock") {
+            //         winner = "undecided"
+            //     }
+            //     if(computerSign === "scissors") {
+            //         winner = "player"
+            //     }
+            //     if(computerSign === "paper") {
+            //         winner = "computer"
+            //     }
+            // }
+            // if(playerSign === "scissors") {
+            //     if(computerSign === "rock") {
+            //         winner = "computer"
+            //     }
+            //     if(computerSign === "scissors") {
+            //         winner = "undecided"
+            //     }
+            //     if(computerSign === "paper") {
+            //         winner = "player"
+            //     }
+            // }
+
+            if(playerSign === computerSign){
+                winner = "undecided"
+            } else if(
+                playerSign === "rock" && computerSign === "scisssors" ||
+                playerSign === "paper" && computerSign === "rock" ||
+                playerSign === "scissors" && computerSign === "paper"
+            ){winner = "player"}
+            else {winner = "computer"}
             //Now we have checks to set the winner. Let's write it to the website.
             //Now you know the drill: show #winner by display: block and fill it with HTML:
             const winnerDiv = document.getElementById("winner")
             winnerDiv.style.display = "block"
 
             //Opg3 done
+            //Opg5 done
             winnerDiv.innerHTML = "The winner is " + winner
 
-            if(winner === "player"){
-                winnerDiv.style.backgroundColor = "#C18500"
-            } else {
+            if (winner === "player"){
+                winnerDiv.style.backgroundColor = "#FFBB24"
+                winnerDiv.innerHTML = "You win"
+            } else if (winner === "computer") {
                 winnerDiv.style.backgroundColor = null
+                winnerDiv.innerHTML = "You lost"
+            } else if (winner === "undecided") {
+                winnerDiv.style.background = null
+                winnerDiv.innerHTML = "It's a tie"
             }
             
             /* OPPGAVE 2.2: FORKLAR HVA SOM SKJER PÅ LINJE 254(257 nå)
@@ -272,15 +295,37 @@
             //Now, lastly, let's update the counter on how many games we have played:
             counter = counter + 1
 
-            document.getElementById("counter").innerHTML = counter
             /* OPPGAVE 2.3: FORKLAR HVA SOM SKJER PÅ LINJE 262(265 nå)
-             * _ditt svar her   Vi definerer counter = counter + 1 for  vise hvor mange spill som er spilt, dette er nødvendig siden index starter telling på 0_ 
-             */
+            * _ditt svar her   Vi definerer counter = counter + 1 for  vise hvor mange spill som er spilt, dette er nødvendig siden index starter telling på 0_ 
+            */
+        
+           //Opg4 done
+           if(counter > 0){
+               const counter = document.getElementById("counter")
+               counter.style.color = "var(--lightblue)"
+            }
+
+            document.getElementById("counter").innerHTML = counter
+
+
+
+            if(winner === "player") {
+                playerWins++
+                document.getElementById("pW").innerHTML = playerWins
+            } else if(winner === "computer") {
+                computerWins = computerWins + 1
+                document.getElementById("cW").innerHTML = computerWins
+            } else {
+                draws = draws + 1
+                document.getElementById("draw").innerHTML = draws
+            }
+            console.log(computerWins)
+
 
             //And display the button for playing again:
             document.getElementById("replay").style.display = "block"
         }
-
+        
         //Now, we need to make a function that restarts the game. This means setting all 
         //variables and values back to their initial state, so nothing is selected as we start:
         function restartGame() {

@@ -40,37 +40,37 @@
         Kommenter hver feil du finner! 
     -->
     <script>
-//Trenger ikke å bruke ;
+//0     Trenger ikke å bruke ;
         const examtype = "error";
-//Mangler en " etter error
+//1     Mangler en " etter error
         const studenttype = "hero";
-//Brukte : istedenfor =
+//2     Brukte : istedenfor =
         const maxScore = 1337;
         let currentScore = 330;
-//Let istedenfor const
+//3     Let istedenfor const
 
         const addedScore = currentScore * 4
-//Brukte : isteden for ; eller ingenting
-//Var en = for mye
+//4     Brukte : isteden for ; eller ingenting
+//4.1   Var en = for mye
         const missingMaxScore = 17;
-//Fjernet ""
+//5     Fjernet ""
         currentScore = addedScore + missingMaxScore;
-//Manglet en S forran core
+//6     Manglet en S forran core
         const green = "0, 128, 0";
 
         if (maxScore === 1337) {
-//Manglet en =
+//7     Manglet en =
             const successImage = `${examtype}-${studenttype}` 
-//Manglet en $ forran studenttype     
+//8     Manglet en $ forran studenttype     
 
         if (currentScore === maxScore) {
-//En = for mye
+//9     En = for mye
             document.getElementById("background").style.backgroundImage = "url(" + successImage + ".jpg)"
-//Skrivefeil i getElementById
+//10    Skrivefeil i getElementById
             document.getElementById("mainframe").style.backgroundColor = "rgb(" + green + ")"
-//Byttet , til . forran style.backgroundcolor
-//Var en e for mye i green
-//Flyttet } til uner funskjonen 
+//11    Byttet , til . forran style.backgroundcolor
+//11.1  Var en e for mye i green
+//11.2  Flyttet } til uner funskjonen 
         }
         }
     </script>

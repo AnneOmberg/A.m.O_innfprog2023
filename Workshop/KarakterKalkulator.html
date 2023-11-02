@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karakterkalkulator</title>
+    <style>
+        body{
+            font-family: candara, sans-serif;
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgb(0, 71, 72);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Karakterkalkulator</h1>
+    <p>Oppgave 1 : <input id="oppgave1" type="number"/></p>   
+    <p>Oppgave 2 : <input id="oppgave2" type="number"/></p>   
+    <p>Oppgave 3 : <input id="oppgave3" type="number"/></p>
+    <button onclick="calculate()">Send inn resultat</button>
+    <p id="result"></p>
+
+    <script>
+        function calculate() {
+            const oppgave1 = document.getElementById("oppgave1").value
+            const oppgave2 = document.getElementById("oppgave2").value
+            const oppgave3 = document.getElementById("oppgave3").value
+
+            console.log(oppgave1, oppgave2, oppgave3)
+
+            const totalPercent = (0.2 * (oppgave1 / 10 * 100)) + (0.3 * (oppgave2 / 12 * 100)) + (0.5 * (oppgave3 / 18 * 100))
+            console.log(totalPercent)
+
+            let grade = "F"
+            if(totalPercent >= 25 && totalPercent < 45) {
+                grade = "E"
+            }
+            if(totalPercent >= 45 && totalPercent < 69) {
+                grade = "D"
+            }
+            if(totalPercent >= 69 && totalPercent < 89) {
+                grade = "C"
+            }
+            if(totalPercent >= 89 && totalPercent < 100) {
+                grade = "B"
+            }
+            if(totalPercent === 100) {
+                grade = "A"
+            }
+            document.getElementById("result").innerHTML = totalPercent.toFixed(2) + "% gir karakter " + grade
+        }
+
+    </script>
+    
+</body>
+</html>

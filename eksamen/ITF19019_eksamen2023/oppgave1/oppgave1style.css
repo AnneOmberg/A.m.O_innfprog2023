@@ -1,0 +1,128 @@
+body {
+    background: steelblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Courier New', Courier, monospace;
+}
+div, article, section, button {
+    box-sizing: border-box;
+}
+article {
+    width: 400px;
+    overflow: hidden;
+    padding: 2rem 1rem;
+    border-radius: 30px;
+    background: #fff;
+}
+#calculation {
+    background: darkslategray;
+    color: #fff;
+    padding: 1rem 2rem;
+    font-family: 'Digital-7 Mono';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 3rem;
+    border-radius: 15px;
+    text-align: right;
+    min-height: 3.2rem;
+    box-sizing: border-box;
+    width: 100%;
+}
+#summary {
+    font-size: 1rem;
+    color: lightgray;
+    display: flex;
+    justify-content: flex-end;
+}
+#keyboard {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas: "numbers controls";
+}
+#numbers {
+    grid-area: "numbers";
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding-right: 1rem;
+}
+#keyboard button {
+    
+    border-radius: 1rem;
+    font-size: 2rem;
+    border: 2px solid #333;
+    cursor: pointer;
+    transition: ease-in-out .5s;
+}
+#numbers button {
+    width: 80px;
+    height: 80px;
+    margin-bottom: .5rem;
+}
+#numbers button:nth-child(3n+1) {
+    align-self: flex-start;
+}
+#numbers button:nth-child(3n+3) {
+    justify-self: flex-end;
+    align-self: flex-start;
+}
+#numbers button:hover {
+     background: lightblue;
+}
+#controls {
+    display: flex;
+    gap: .5rem;
+    flex-direction: column;
+}
+#controls button {
+    flex-basis: 1;
+    flex-grow: 1;
+    width: 100%;
+    align-self: flex-end;
+    background: slategray;
+    color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-size: 1.5rem;
+}
+#controls button:hover {
+    background: darkslategray;
+}
+button#control-equal {
+    background: forestgreen;
+}
+button#control-clear {
+    background: lightblue;
+}
+#memory {
+    grid-row: 2
+}
+#memory p {
+    width: 100%;
+}
+#memory button {
+    font-family: 'Courier New', Courier, monospace;
+    background: orangered;
+    color: white;
+    border: 1px solid red;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    padding: .5rem;
+    cursor: pointer;
+    transition: ease-in-out .5s;
+}
+#memory button:hover {
+    background: sienna;
+    border: 1px solid brown;
+}
+#memory button:disabled {
+    background: lightgray;
+    color: white;
+    border: 1px solid silver;
+    
+}

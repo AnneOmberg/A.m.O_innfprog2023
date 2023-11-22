@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eksamen i Innføring i Programmering - oppgave 2</title>
+    <link rel="stylesheet" href="oppgave2style.css">
+</head>
+<body>
+    <main>
+        <nav>
+            <h2>Controls</h2>
+            <p><span class="buttonIllustration" id="sbutton">S</span> Add a square</p>
+            <p><span class="buttonIllustration" id="cbutton">C</span> Add a circle</p>
+            <p><span class="buttonIllustration" id="rbutton">R</span> Remove random element</p>
+            <h2>Number of elements</h2>
+            <ul>
+                <li>Squares: <span id="squareCount">0</span></li>
+                <li>Circles: <span id="circleCount">0</span></li>
+                <li>Total: <span id="totalCount">0</span></li>
+            </ul>
+        </nav>
+        <canvas id="drawArea"></canvas>
+    </main>
+
+    <script>
+        //INITIATE CANVAS
+        //Canvas width: 600, Canvas height: 500
+        const canvas = document.getElementById("drawArea")
+        canvas.width = 600
+        canvas.height = 500
+        const ctx = canvas.getContext("2d")
+
+        //gjør klar randomMinMax-funksjonen, helt lik som i pensum
+        function randomMinMax(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min)
+        }
+
+        //TODO: Storage of multiple element objects (Grade C and above)
+        const elements = [
+            {type: "square", x: 23, y: 220},
+            {type: "circle", x: 381, y: 444}
+        ]
+
+        //TODO: Function to add an element of parameter type 'square' or 'circle':
+
+
+        //TODO: Function to remove random element:
+        
+
+        //TODO: EventListeners to track user input:
+
+
+        //TODO: Count the element types and total and print to interface
+
+        
+        //Function to draw on canvas:
+        function renderDrawings() {
+            //Clear the rectangle
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+            document.addEventListener("keydown", event => {
+            if(event.code === "KeyS")
+        })
+
+            //TODO: Draw the elements on canvas:
+
+
+            //Testprint:
+            console.log("Currently drawing frames...")
+            //Use requestAnimationFrame to re-run renderDrawings-function
+            requestAnimationFrame(renderDrawings)
+        }
+        //Start drawing
+        renderDrawings()
+    </script>
+</body>
+</html>

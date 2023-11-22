@@ -1,0 +1,44 @@
+body {
+    background: #fff;
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+main {
+    display: flex;
+    gap: 2rem;
+    width: 100%;
+    max-width: 900px;
+    margin: 2vh auto;
+}
+.buttonIllustration {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    padding-top: 10px;
+    background: #eee;
+    color: #333;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 2px #ccc;
+    box-sizing: border-box;
+    margin-right: 1rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 30px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+canvas {
+    width: 600px;
+    height: 500px;
+    background: #011c37;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}

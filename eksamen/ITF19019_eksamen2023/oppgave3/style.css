@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Onest&display=swap');
+
+:root {
+    --green: #03543a;
+    --white: #e2f0eb;
+    --black: #000900;
+    --gray: #d3d5d5;
+}
+
+body {
+    background: var(--white);
+    color: var(--black);
+    font-family: 'Onest', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    transition: ease-in-out .5s;
+}
+
+header {
+    width: 100%;
+    background: var(--green);
+    color: var(--white);
+    padding: 1rem;
+}
+
+main, div, article, section {
+    box-sizing: border-box;
+}
+
+main {
+    width: 100%;
+    max-width: 1200px;
+    margin: 1rem auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "list admin";
+}
+
+main section {
+    padding: 2rem;
+}
+
+#list {
+    grid-area: "list";
+}
+
+#admin {
+    grid-area: "admin";
+    background: #f3f3f3;
+}
+
+/* FILTER LIST */
+#filter ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    gap: .5rem;
+}
+
+/* FORMS */
+.form {
+    border-bottom: 1px solid #fff;
+    border-top: 1px solid #ccc;
+    padding: 1rem 0;
+}
+.form:first-child {
+    border-top: none;
+}
+.form:last-child {
+    border-bottom: none;
+}
+.form p {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.form p label {
+    min-width: 140px;
+}
+
+input, select, textarea, button {
+    font-family: 'Onest', sans-serif;
+    padding: .5rem;
+}
+button {
+    background: var(--green);
+    color: var(--white);
+    padding: .5rem;
+    border: 2px solid var(--green);
+    transition: ease-in-out .5s;
+    font-size: 1rem;
+}
+button.active {
+    background: var(--gray);
+    color: var(--black);
+}
+button:hover {
+    background: black;
+    cursor: pointer;
+}
+input:focus, select:focus, textarea:focus {
+    border-color: var(--green);
+    box-shadow: 2px 2px 2px var(--green);
+}
+
+/* MEMBER CARDS */
+#staffList {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+article.membercard {
+    border: 1px solid var(--gray);
+    background: #fff;
+    padding: 1px;
+    width: 49%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+.metainfo {
+    display: flex;
+    justify-content: flex-start;
+    gap: .5rem;
+    align-items: center;
+}
+article.membercard a {
+    background: var(--white);
+    color: var(--black);
+    border: 1px solid var(--green);
+    display: flex;
+    padding: .2rem .5rem;
+    gap: .3rem;
+    align-items: center;
+    text-decoration: none;
+    transition: ease-in-out .5s;
+}
+article.membercard a:hover {
+    background: var(--gray);
+    color: var(--green);
+}

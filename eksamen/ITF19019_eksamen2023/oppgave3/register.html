@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff register</title>
+    <link href="style.css" rel="stylesheet" media="screen" />
+</head>
+<body>
+    <header>
+        <h1>Staff Register</h1>
+    </header>
+    <main>
+        <section id="list">
+            <nav id="filter">
+                <p>Filter on position:</p>
+                <ul id="positionFilter">
+                    <li><button class="all active">All positions</button></li>
+                </ul>
+            </nav>
+            <h2 id="listHeader">Showing all Staff</h2>
+            <div id="staffList">
+                
+            </div>
+        </section>
+        <section id="admin">
+            <div class="form">
+                <h2>Add staff</h2>
+                <p>
+                    <label for="firstname">Firstname</label>
+                    <input type="text" name="firstname" id="firstname" placeholder="Firstname" />
+                </p>
+                <p>
+                    <label for="lastname">Lastname</label>
+                    <input type="text" name="lastname" id="lastname" placeholder="Lastname" /></p>
+                <p>
+                    <label for="position">Position</label>
+                    <select id="position" name="postition">
+                       
+                    </select>
+                </p>
+                <p>
+                    <label for="department">Department</label>
+                    <select id="department" name="department">
+                        
+                    </select>
+                </p>
+                <p>
+                    <label for="email">Email address</label><input type="email" name="email" id="email" placeholder="you@email.com" /></select>
+                </p>
+                <button id="saveStaff">Save staff member</button>
+            </div>
+            <div class="form">
+                <h2>Add position</h2>
+                <p>
+                    <label for="newPosition">Position</label><input type="text" name="newPosition" id="newPosition" placeholder="Position" />
+                </p>
+                <button id="savePosition" onClick="newPosition()">Save new position</button>
+            </div>
+            <div class="form">
+                <h2>Add department</h2>
+                <p>
+                    <label for="newDepartment">Department</label><input type="text" name="newDepartment" id="newDepartment" placeholder="Department" />
+                </p>
+                <button id="saveDepartment">Save new department</button>
+            </div>
+        </section>
+    </main>
+    <script>
+        //Array of staff objects
+        const staff = [
+            {firstname: "Bill", lastname: "Gates", position: "Director", department: "Administration", email: "bill@gates.net"},
+        ]
+
+        //Array of available positions
+        const positions = ["Director", "Team leader", "Producer", "Engineer", "Designer"]
+
+        //Array of available departments
+        const departments = ["Administration", "Human Resources", "Production", "Finances"]
+    </script>
+</body>
+</html>

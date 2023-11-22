@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eksamen oppgave 1: Kalkulator</title>
+    <link rel="stylesheet" href="font/stylesheet.css">
+    <link rel="stylesheet" href="oppgave1style.css">
+</head>
+<body>
+    <article>
+        <input type="text" id="calculation" />
+        <div id="keyboard">
+            <div id="numbers">
+                <button id="number-1" value="1" onClick="display('1')">1</button>
+                <button id="number-2" value="2" onClick="display('2')">2</button>
+                <button id="number-3" value="3" onClick="display('3')">3</button>
+                <button id="number-4" value="4" onClick="display('4')">4</button>
+                <button id="number-5" value="5" onClick="display('5')">5</button>
+                <button id="number-6" value="6" onClick="display('6')">6</button>
+                <button id="number-7" value="7" onClick="display('7')">7</button>
+                <button id="number-8" value="8" onClick="display('8')">8</button>
+                <button id="number-9" value="9" onClick="display('9')">9</button>
+                <button id="number-comma" value="." onClick="display(',')">,</button>
+                <button id="number-0" value="0" onClick="display('0')">0</button>
+                <button id="control-clear" onClick="clearScreen()">C</button>
+                
+            </div>
+            <div id="controls">
+                <button id="control-plus" value="+" onClick="display('+')">+</button>
+                <button id="control-minus" value="-" onClick="display('-')">-</button>
+                <button id="control-multiply" value="*" onClick="display('*')">*</button>
+                <button id="control-multiply" value="/" onClick="display('/')">/</button>
+                <button id="control-equal" value="=" onClick="solve()">=</button>
+            </div>
+        </div>
+        <div id="memory">
+            <p>Memory (<span id="memory-bank">0</span>)</p>
+            <button id="memory-add" onclick="addMemory()">Add</button>
+            <button id="memory-browseback" disabled>Previous</button>
+            <button id="memory-browseforward" disabled>Next</button>
+        </div>
+    </article>
+
+    <script>
+        //skrivefeil: display ikke displey  /Manglet en o i "calculation"    /Feil i getElementByID        
+        function display(val) {
+            document.getElementById("calculation").value += val
+            return val
+        }
+
+        //feil med () bak   /Ikke s bak result
+        function solve() {
+            let calculation = document.getElementById("calculation").value
+            let result = eval(calculation)
+            document.getElementById("calculation").value = result
+            return result
+        }
+        //let calculation henter info fra html-coden med id calculation og .value er for å hente parameterene fra buttons innenfor calculation. 
+        //let result bruker en metode som gjør det mulig for javascript og renge ut et uttrykk selv om de forskjellige komponentene er tekst-streng istede for tall. eval = "3" * "4" = 12 istedenfor å skrive ut 3 * 4. Denne metoden er ikke anbefalt, siden den kan gi risk for hakking. (linker brukt: https://www.geeksforgeeks.org/javascript-eval-function/  https://www.w3schools.com/jsref/jsref_eval.asp) 
+        //siden variabelen calculation er satt lik document.getElementById("calculation").value vil nest siste linje i funksjon solve() være det samme som å si calculation = result som da skal gi resultatet av mattestykket utført i kalkulatoren
+        //return result gjør slik at result blir skrevet ut i regnefeltet på kalkulatoren. Det er ikke nødvendig siden det =-knappen er et HTML-element.
+
+        const add = calculation.push(result)
+        console.log(add)
+
+        function clearScreen() {
+            document.getElementById("calculation").value = ""
+        }
+    </script>
+</body>
+</html>

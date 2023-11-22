@@ -31,8 +31,8 @@
         </nav>
     </header>
     <main>
-        
-        <section id="notebook">
+        <canvas id="gamearea"></canvas>
+        <section id="notebook" class="hidden hideable">
             <div id="notebook-page">
                 
                 <h2>Notater</h2>
@@ -41,30 +41,28 @@
                         <td><img src="icons/variable.svg" alt="" /></td>
                         <td>Variabler</td>
                         <td>
-                            <span id="variables">0</span>
-                            var
-                            <!-- Kan bruke span for å definere et av elementene i td taggen!!! -->
+                            <span id="variables">0</span> 
                         </td>
                     </tr>
                     <tr>
                         <td><img src="icons/array.svg" alt="" /></td>
                         <td>Arrayer</td>
-                        <td id="arrays">1</td>
+                        <td><span id="arrays">1</span></td>
                     </tr>
                     <tr>
                         <td><img src="icons/loop.svg" alt="" /></td>
                         <td>Løkker</td>
-                        <td id="loops">2</td>
+                        <td><span id="loops">2</span></td>
                     </tr>
                     <tr>
                         <td><img src="icons/function.svg" alt="" /></td>
                         <td>Funksjoner</td>
-                        <td id="functions">1</td>
+                        <td><span id="functions">8</span></td>
                     </tr>
                 </table>
             </div>
         </section>
-        <section id="info" class="hidden">
+        <section id="info" class="hidden hideable">
             <div id="info-page">
                 <h2>Info / Hvordan spille C<sup>3</sup></h2>
                 <p>Målet med spiller er at programmeringsstudenten Fortran <span class="illustration">(<img src="icons/fortran.svg" />)</span> skal samle programmeringskonseptene variabler <span class="illustration">(<img src="icons/variable.svg" />)</span>, arrayer <span class="illustration">(<img src="icons/array.svg" />)</span>, løkker <span class="illustration">(<img src="icons/loop.svg" />)</span> og funksjoner <span class="illustration">(<img src="icons/function.svg" />)</span> i kladdeboka <span class="illustration">(<img src="icons/notebook.svg" />)</span> si.</p>
@@ -78,153 +76,390 @@
         </section>
     </main>
     <script>
+        //Prepare canvas
+        const canvas = document.getElementById("gamearea")
+        canvas.width = 800
+        canvas.height = 600
+        const ctx = canvas.getContext("2d")
         //PREPARE GAME CONFIG AND VARIABLES
-
-        let gameConfig = {
-                player: "Anne",
-                // player: "",
-                energy: 10,
-                points: 50,
-                duration: 123
-                // notebook: {
-                //     variables: 3,
-                //     arrays: 17,
-                //     loops: 5,
-                //     functions: 3 
-                // }
-//document.getElementById("energy").innerHTML = gameConfig.notebook.variables
-            }     
-            
         //TODO: config
+        const gameConfig = {
+            player: "Marius",
+            energy: 3,
+            points: 0,
+            duration: 0,
+            gameState: "active" //mulige states: active, paused, gameover, completed
+        }
        
         //TODO: notebook
-
         const notebook = {
-            variables: 3,
-            arrays: 17,
-            loops: 5,
-            functions: 3 
-        }    
-        
-        //Funksjon for å oppdatere en konfigurasjonsverdi
-        function changeConfigValue(config, value) {
-            if(config === "energy") {
-            gameConfig.energy = gameConfig.energy + value
-            }
-            if(config === "points") {
-                gameConfig.points = gameConfig.points + value
-            }
-            if(config === "duration") {
-                gameConfig.duration = gameConfig.duration + value 
-            }
-
-            //ternerary operator(viktig med mellomrom)
-            config === "variables" ? notebook.variables = noteBook.variables + value : null 
-            config === "arrays" ? noteBook.arrays = noteBook.arrays + value : null
-            config === "loops" ? noteBook.loops = noteBook.loops + value : null
-            config === "functions" ? noteBook.functions = noteBook.functions + value : null
-
-            console.log(gameConfig.points)
+            variables: 0,
+            arrays: 0,
+            loops: 0,
+            functions: 0
         }
 
-        changeConfigValue("points", -1)
-
-        //TODO: print playerinfo to HTML
-
-        function updateStaticUI() {
-        // Trengs ikke pga if/else testen
-        //document.getElementById("playerName").innerHTML = gameConfig.player        
-        document.getElementById("energy").innerHTML = gameConfig.energy
-        document.getElementById("points").innerHTML = gameConfig.points
-        document.getElementById("duration").innerHTML = gameConfig.duration
-
-        if(!gameConfig.player) {
-            document.getElementById("playerName").innerHTML = `Waiting for player...`
-        }
-            
-        // if(gameConfig.player === "") {
-        //     document.getElementById("playerName").innerHTML = `Waiting for player...`
-        // } 
-        else{
-            document.getElementById("playerName").innerHTML = gameConfig.player 
+        //gjlr klar randomMinMax-funksjonen
+        function randomMinMax(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min)
         }
         
-        //TODO: print notebook info to HTML
-        
-        document.getElementById("variables").innerHTML = notebook.variables        
-        document.getElementById("arrays").innerHTML = notebook.arrays
-        document.getElementById("loops").innerHTML = notebook.loops
-        document.getElementById("functions").innerHTML = notebook.functions
+
         //(BONUS) TODO: function for all prints
-        }
-
-        
-//Skjule og vide menyknapp-info
-        const noteBook = document.getElementById("notebook")
-        const book = document.getElementById("notebookToggler")        
-        book.addEventListener("click", () => selection(noteBook, infoPage))
-
-        
-        const infoPage = document.getElementById("info")
-        const infoButton = document.getElementById("infoToggler")
-
-        infoButton.addEventListener("click", () => selection(infoPage, noteBook))
-        
-        function selection(showElement, hideElement){
-            if(showElement.classList.contains("hidden")){
-                showElement.classList.remove("hidden")
-                showElement.style.display = "block"
-                if(hideElement.style.display === "block"){
-                hideElement.style.display = "none"
-                hideElement.classList.add("hidden")}
-        } else {
-            showElement.classList.add ("hidden")
-            showElement.style.display = "none"
-        }}
-        console.log(infoPage)
-//Ikke nødvendigvis riktig, prøvde å følge foreleser
-        // function selection(elementid){
-
-        //     const hideables = document.querySelectorAll(".hideable")
-        //     console.log(hideables)
-        //     for(let index = 0; index < hideables.length; index++){
-
-        //     }
-        // }
-        // document.getElementById(elementid).style.display = "block"
-
-        //Lytte etter tastetrykk (lytte -> addEventListener)
-        document.addEventListener("keydown", event => {
-            if(event.code === "KeyN"){
-                selection(noteBook, infoPage)
-            } else if(event.code === "KeyI"){
-                selection(infoPage, noteBook)
+        function updateStaticUI() {
+            //TODO: print playerinfo to HTML
+            //Tas vekk pga oppg 5: document.getElementById("playerName").innerHTML = gameConfig.player
+            document.getElementById("energy").innerHTML = gameConfig.energy
+            document.getElementById("points").innerHTML = gameConfig.points
+            document.getElementById("duration").innerHTML = gameConfig.duration
+            if(gameConfig.player === "") {
+                document.getElementById("playerName").innerHTML = "Waiting for player"
             } else {
-                null
+                document.getElementById("playerName").innerHTML = gameConfig.player
             }
-        })
-        console.log(noteBook)
 
-  
-        function updateSingleStaticUI(collectedVari, amount){
-            const collected = document.getElementById(collectedVari)
-            if(collected){
-                collected.innerHTML = amount
-            }
+            //TODO: print notebook info to HTML
+            document.getElementById("variables").innerHTML = notebook.variables
+            document.getElementById("arrays").innerHTML = notebook.arrays
+            document.getElementById("loops").innerHTML = notebook.loops
+            document.getElementById("functions").innerHTML = notebook.functions
         }
 
-        //Kjør funksjonen for utskrift:
-        //Funksjon for å skrive ut oppdatering til et element:
-        
-
+        //WS2, Oppgave 4: Funksjon for å skrive ut oppdatering til et element:
         function updateSingleStaticUI(elementid, value) {
             document.getElementById(elementid).innerHTML = value
         }
-        
-        //Denne oppdaterer alt på nettsiden fra koden
+
+        //Kjøre (kalle) funksjonen for utskrift:
         updateStaticUI()
-        
+
+        //WS2, Oppgave 4: Testkjøring av funksjon for å oppdatere ett element:
         updateSingleStaticUI("playerName", "TESTNAVN")
+
+        //Lage funksjon for å vise/skjule elementer
+        function toggleVisibility(elementid) {
+            //få tak i elementet som skal toggle synlighet
+            const element = document.getElementById(elementid)
+            //sjekke om klassen hidden finnes:
+            if(element.classList.contains("hidden") === true) {
+                element.style.display = "block"
+                element.classList.remove("hidden")
+                //WS4 oppg4: Stoppe telle når Infortekst er oppe
+                if(elementid === "info") {
+                    gameConfig.gameState = "tutorial"
+                }
+            } else {
+                element.style.display = "none"
+                element.classList.add("hidden")
+                    if(elementid === "info") {
+                        gameConfig.gameState = "active"
+                    }
+            }
+        }
+
+        //WS2, Oppg. 3: Lytte etter tastaturtrykk
+        document.addEventListener("keydown", function(Event) {
+            //Sjekke om tasten som er trykket er N:
+            if(Event.key === "n") {
+                toggleVisibility("notebook")
+            }
+            //Sjekke om tasten som er trykket er I:
+            if(Event.key === "i") {
+                toggleVisibility("info")
+            }
+            //WS3, oppg. 4: Pause med P-tasten
+            if(Event.key === "p") {
+                if(gameConfig.gameState === "active") {
+                    gameConfig.gameState = "paused"
+                }
+                else if(gameConfig.gameState === "paused") {
+                    gameConfig.gameState = "active"
+                }
+                
+                console.log(gameConfig)
+            }
+
+            //WS4 oppg1: sjekke etter piltaster
+            if(event.key === "ArrowLeft") {
+                fortran.moveLeft = true
+            }
+            if(event.key === "ArrowRight") {
+                fortran.moveRight = true
+            }
+            //Ternerary operator
+            event.key === "ArrowDown" ? fortran.moveDown = true : null
+            event.key === "ArrowUp" ? fortran.moveUp = true : null
+        })
+
+        //WS4, oppg1: eventListener for keyUp
+        document.addEventListener("keyup", function(event) {
+            if(event.key === "ArrowLeft") {
+                fortran.moveLeft = false 
+            }
+            if(event.key = "ArrowUp") {
+                fortran.moveUp = false
+            }
+            if(event.key = "ArrowRight") {
+                fortran.moveRight = false
+            }
+            if(event.key = "Arrowdown") {
+                fortran.moveDown = false
+            }
+        })
+
+        //WS2, Oppg. 2: Lytte etter klikk på notebook- og info-knappene:
+        document.getElementById("notebookToggler").addEventListener("click", function(Event) {
+            toggleVisibility("notebook")
+        })
+        document.getElementById("infoToggler").addEventListener("click", function(Event) {
+            toggleVisibility("info")
+        })
+
+        //WS3, Oppg2: Tegne pause-melding
+        function pauseText(text) {
+            ctx.fillStyle = "white"
+            ctx.fillRect(canvas.width - 200, canvas.height - 30, 200, 30)
+            ctx.fillStyle = "#3c429b"
+            ctx.font = "16px Arial"
+            ctx.fillText(text, canvas.width - 195, canvas.height - 10)
+        }
+        
+        //WS3, Oppg 3: Opptegning av Fortran
+        const fortran = {
+            speed: 10,
+            x: canvas.width / 2 - 20,
+            y: canvas.height / 2 - 40,
+            moveLeft: false,
+            moveRight: false,
+            moveUp: false,
+            moveDown: false,
+            width: 40,
+            height: 84
+
+        }
+
+        const fortranImage = new Image()
+        fortranImage.src = "icons/fortran.png"
+        let fortranLoaded = false
+        fortranImage.onload = () => {
+            fortranLoaded = true
+            //Bruker variabelen fortranLoaded i renderFrames() for å sjekke at bildet er lastet.
+        }
+
+        //WS3, Oppg 5: Liste med elementtyper:
+        const itemTypes = ["variable", "array", "loop", "function", "bug", "energydrink"]
+        const randomItem = itemTypes[Math.floor(Math.random() * itemTypes.length)]
+        console.log(randomItem)
+
+        //WS4 oppg5: oppdater til en tom arrai i WS5 oppg1        
+        const items = [
+        ]
+        
+        //WS5, oppg1 funksjon for å legge nytt element in i arrayen 
+        function pushItem() {
+            if(gameConfig.gameState === "active") {
+            const elementType = itemTypes[Math.floor(Math.random() * itemTypes.length)]
+            items.push({
+                type: elementType,
+                x: randomMinMax(10, canvas.width - 60), 
+                y: elementType === "bug" ? canvas.height + 100 : randomMinMax(10, canvas.height - 60),
+                lifetime: randomMinMax(4, 10),
+                state: "active" //active, bug: collided, inactive, !bug: collected
+            })}
+        }
+
+        //WS5 oppg1: lag mellom 2 og 5 elementer ved start av spillet
+        for(let itemCount = 1; itemCount <= randomMinMax(2, 5); itemCount++) {
+            pushItem()
+        }
+
+        //WS5, oppg1: rekursiv funksjon for å oprette elementer
+        function createItem() {
+            console.log("CreateItem kjørt")
+
+            pushItem()
+
+            setTimeout(createItem, randomMinMax(2000, 6000))
+        }
+        createItem()
+
+        //WS3, Oppg 5: Funksjon for å tegne et element
+        function drawItem(type, x, y, lifetime) {
+            const itemImage = new Image()
+            itemImage.src = "icons/" + type + ".svg"
+            ctx.drawImage(itemImage, x, y)
+
+            if(type !== "bug"){
+                //Lage sekundtellersirkel
+                ctx.beginPath()
+                ctx.arc(x+5, y+5, 10, 0, 2 * Math.PI)
+                ctx.fillStyle = "red"
+                ctx.fill()
+                ctx.font = "12px Mandara"
+                ctx.fillStyle = "white"
+                ctx.fillText(lifetime, x+1, y+8)
+                ctx.closePath()
+            }
+        }
+
+        //Bonus: funksjon for outOfBounds straff
+        function outOfBounds() {
+            gameConfig.energy = gameConfig.energy - 1
+            updateSingleStaticUI("energy", gameConfig.energy)
+            fortran.x = canvas.width/2 - fortran.width/2
+            fortran.y = canvas.height/2 - fortran.height/2            
+        }
+
+        //WS4 oppgave.4: Sekundteller
+        setInterval(function() {
+            if(gameConfig.gameState === "active") {
+                gameConfig.duration = gameConfig.duration + 1
+                updateSingleStaticUI("duration", gameConfig.duration)
+
+                //WS5 oppg 1.3: trekke fra levetid på alle elementer
+                items.map((element) => {
+                    element.lifetime--
+                })
+            }
+
+        }, 1000)
+
+
+        //WS3: Oppg.3: RequestAnimationFrame
+        requestAnimationFrame = window.requestAnimationFrame || 
+        window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || 
+        window.mozRequestAnimationFrame
+
+        function renderFrames() {
+            //Tømme frame
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+            //WS5 oppg3: game over
+            if(gameConfig.energy <= 0) {
+                gameConfig.gameState = "gameover"
+            }
+            //WS3: Oppg 2: Tegn opp Fortran
+            fortranLoaded ? ctx.drawImage(fortranImage, fortran.x, fortran.y, fortran.width, fortran.height) : null
+            //WS3, Oppg 5: Tegn opp item
+            // drawItem(randomItem, 100, 100) -> tidligere oppg
+
+            //WS3, Oppg 3: Test: sjekker om spillet er pauset:
+            if(gameConfig.gameState === "paused") {
+                console.log("Spillet er pauset")
+                pauseText("Press P to unpause")
+                //Skriv ut PAUSED til Canvas
+                ctx.font = "80px Arial"
+                ctx.fillStyle = "purple"
+                ctx.fillText("Paused", 270, 300)
+            } else if(gameConfig.gameState === "gameover") {
+                ctx.font = "80px Arial"
+                ctx.fillStyle = "darkorange"
+                ctx.fillText("GAME OVER!", 150, 300)
+            } else {
+                console.log("Spillet er i gang")
+                pauseText("Press P to pause")
+
+                if(gameConfig.gameState === "active") {  
+                    //Bonus: alltid elementer i canvas
+                    const filteredItems = items.filter(element => element.state === "active").length
+                    if(filteredItems < 2) {
+                        pushItem()
+                    }
+                    items.map((element) => {
+                        if(element.state === "active") {
+                                if(element.type === "bug") {                               
+                                element.y = element.y - 5
+                                if(element.y < 0 - 100) {
+                                    element.state = "dead"
+                                }
+                            } else {                            
+                                //element.lifetime > 0 ? drawItem(element.type, element.x, element.y, element.lifetime) : null
+                                element.lifetime < 0 ? element.state = "lost" : null
+                            }
+
+                            drawItem(element.type, element.x, element.y, element.lifetime)
+
+                            //WS5 oppg 1.3 , sjekke om fortran befinner seg på plassen til elementet
+                            if(
+                                element.x + 50 > fortran.x &&
+                                element.x < fortran.x + fortran.width &&
+                                element.y + 50 > fortran.y &&
+                                element.y < fortran.y + fortran.height
+                            ) {
+                                console.log("fortran har truffet " + element.type)
+                                //Hvis elementet skal plukkes opp, skal det forsvinne, legges i notatboka og gi poeng
+                                if(element.type !== "bug") {
+                                    element.state = "collected"
+                                    
+                                    if(element.type === "variable") {
+                                        notebook.variables++
+                                        updateSingleStaticUI("variables", notebook.variables)
+                                    }
+                                    if(element.type === "loop") {
+                                        notebook.loops++
+                                        updateSingleStaticUI("loops", notebook.loops)
+                                    }
+                                    if(element.type === "array") {
+                                        notebook.arrays++
+                                        updateSingleStaticUI("arrays", notebook.arrays)
+                                    }
+                                    if(element.type === "function") {
+                                        notebook.functions++
+                                        updateSingleStaticUI("functions", notebook.functions)
+                                    }
+                                    if(element.type === "energydrink") {
+                                        gameConfig.energy++
+                                        updateSingleStaticUI("energy", gameConfig.energy)
+                                    }
+
+                                    gameConfig.points++
+                                    updateSingleStaticUI("points", gameConfig.points)
+                                } else {
+                                    //Hvis elementet er en bug , fortran mister energy , bug forsvinner
+                                    gameConfig.energy--
+                                    updateSingleStaticUI("energy", gameConfig.energy)
+                                    element.state = "hit"
+                                }
+                            }
+                        }
+                        
+                    })
+
+                //WS4 oppg1
+                    if(fortran.moveRight === true) {
+                        fortran.x = fortran.x + fortran.speed
+                        if(fortran.x >= canvas.width + fortran.width/2) {
+                            outOfBounds()
+                            fortran.moveRight = false
+                        }
+                    }
+                    if(fortran.moveLeft === true) {
+                        fortran.x = fortran.x - fortran.speed
+                        if(fortran.x <= 0 - fortran.width/2) {
+                            console.log("Fuck")
+                            outOfBounds()
+                            fortran.moveLeft = false
+                        }
+                    }
+                    if(fortran.moveDown === true) {
+                        fortran.y = fortran.y + fortran.speed
+                        if(fortran.y >= canvas.height - fortran.height/2) {
+                            outOfBounds()
+                            fortran.moveDown = false 
+                        }
+                    }
+                    if(fortran.moveUp === true) {
+                        fortran.y = fortran.y - fortran.speed
+                        if(fortran.y <= 0 - fortran.height/2) {
+                            outOfBounds()
+                            fortran.moveUp = false
+                        }
+                    }
+                }
+            }
+            //Kjør renderFrames på ny vha requestAnimationFrame
+            requestAnimationFrame(renderFrames)
+        }
+        renderFrames()
     </script>
 </body>
 </html>

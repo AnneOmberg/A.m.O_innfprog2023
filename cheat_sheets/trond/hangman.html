@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="nb">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/stilark.css">
+        <title>Spillutvikling: Hangman</title>
+    </head>
+        <body>
+            <!-- 
+                * Deleksamen4 - Spillutvikling
+                * Innføring i programmering
+                * Hangman  
+                * HIOF
+                * Trond Vebjørn Omberg, 193211 
+            -->
+            <div class="wrapper">
+            <h1>Hangman: Gjett ordet</h1>
+            <p>Bruk alfabetet nedenfor for å gjette fram ordet</p>
+        </div>
+        <div class="wrapper">
+           
+            <!-- Canvas for fremvisning av galge og mann -->
+            <canvas id="playboard" width="700px" height="400px">
+                Denne teksten vises hvis nettleseren ikke støtter HTML5 canvas.
+            </canvas>
+            
+            <!-- Vis liv -->
+            <p id="showMyLives"></p>
+
+            <!-- Tilfeldig valgt ord som skal gjettes -->
+            <div id="selectedWordHolder"></div>
+
+            <!-- Alfabetet vises her -->
+            <div id="buttons">
+                <!-- Intern array med bokstaver a-z -->
+                
+                <!-- Tilknyttet klasse:
+                    - clicked
+                -->
+            </div>
+
+                <!-- Knapp som resetter spillet -->
+                <button id="reset">Spill igjen</button>
+
+        </div><!-- wrapper -->
+        
+        <!-- Hente JavaScript til spillet -->
+        <script src="js/hangman.js"></script>
+    </body>
+</html>

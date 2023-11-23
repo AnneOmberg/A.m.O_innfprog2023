@@ -52,6 +52,8 @@
 
 
         //TODO: Count the element types and total and print to interface
+        const square = document.getElementById("sbutton")
+        
 
         
         //Function to draw on canvas:
@@ -59,12 +61,17 @@
             //Clear the rectangle
             ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-            document.addEventListener("keydown", event => {
-            if(event.code === "KeyS")
-        })
+             document.addEventListener("keydown", event => {
+             if(event.code === "KeyS") {
+                ctx.fillReact = elements[0]
+                console.log(renderDrawings)
+             }
+             })
 
             //TODO: Draw the elements on canvas:
-
+            function drawS() {
+                
+            }
 
             //Testprint:
             console.log("Currently drawing frames...")

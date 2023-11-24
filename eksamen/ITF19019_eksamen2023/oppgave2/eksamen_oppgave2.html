@@ -11,7 +11,7 @@
         <nav>
             <h2>Controls</h2>
             <p><span class="buttonIllustration" id="sbutton">S</span> Add a square</p>
-            <p><span class="buttonIllustration" id="cbutton">C</span> Add a circle</p>
+            <p><span class="buttonIllustration" id="cbutton" onclick="addElement('circle')">C</span> Add a circle</p>
             <p><span class="buttonIllustration" id="rbutton">R</span> Remove random element</p>
             <h2>Number of elements</h2>
             <ul>
@@ -38,7 +38,12 @@
 
         //TODO: Storage of multiple element objects (Grade C and above)
         const elements = [
-            {type: "square", x: 23, y: 220},
+            {type: "square",
+             x: randomMinMax(canvas.width), 
+             y: randomMinMax(canvas.height),
+             width: 8,
+             height: 8
+            },
             {type: "circle", x: 381, y: 444}
         ]
 
@@ -53,7 +58,7 @@
 
         //TODO: Count the element types and total and print to interface
         const square = document.getElementById("sbutton")
-        
+
 
         
         //Function to draw on canvas:
@@ -62,16 +67,16 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height)
 
              document.addEventListener("keydown", event => {
-             if(event.code === "KeyS") {
-                ctx.fillReact = elements[0]
+             if(event.code === "KeyC") {
+                addElement("circle")
                 console.log(renderDrawings)
-             }
+             } else if ("click", function() {
+                addElement("square");
+                })
              })
 
             //TODO: Draw the elements on canvas:
-            function drawS() {
-                
-            }
+            ctx.fillRect(elements[0].x, elements[0].y, elements[0].width, elements[0].height)
 
             //Testprint:
             console.log("Currently drawing frames...")

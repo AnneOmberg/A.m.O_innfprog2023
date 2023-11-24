@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eksamen i Innføring i Programmering - oppgave 2</title>
     <link rel="stylesheet" href="oppgave2style.css">
 </head>
+
 <body>
     <main>
         <nav>
@@ -37,54 +39,103 @@
         }
 
         //TODO: Storage of multiple element objects (Grade C and above)
-        const elements = [
-            {type: "square",
-             x: randomMinMax(canvas.width), 
-             y: randomMinMax(canvas.height),
-             width: 8,
-             height: 8
-            },
-            {type: "circle", x: 381, y: 444}
-        ]
+        const elements = []
+
+        //Variabel for å telle elementer på canvaset
+        let sCount = 0
+        let cCount = 0
+        let tCount = 0
+        let remove = 0 
+
+        function update() {
+            tCount = elements.length
+            document.getElementById("totalCount").innerHTML = tCount
+
+            sCount = elements.filter(element => element.type === "square").length
+            document.getElementById("squareCount").innerHTML = sCount
+
+            cCount = elements.filter(element => element.type === "circle").length
+            document.getElementById("circleCount").innerHTML = cCount
+        }
 
         //TODO: Function to add an element of parameter type 'square' or 'circle':
+        function pushElements(type) {
+            if (type === "square") {
+                elements.push({
+                    type: type,
+                    x: randomMinMax(0, canvas.width),
+                    y: randomMinMax(0, canvas.height),
+                    width: 13,
+                    height: 13
+                })
+            }
+            if (type === "circle") {
+                elements.push({
+                    type: type,
+                    x: randomMinMax(0, canvas.width),
+                    y: randomMinMax(0, canvas.height),
+                    radius: 8
+                })
+            }
+            update()
+        }
 
 
         //TODO: Function to remove random element:
-        
+
 
         //TODO: EventListeners to track user input:
+        document.addEventListener("keydown", event => {
+            if (event.code === "KeyC") {
+                pushElements("circle")
+                console.log(elements)
+            }
+            if (event.code === "KeyS") {
+                pushElements("square")
+                console.log(elements)
+            }
+            if (event.code === "KeyR") {
+                pushElements.splice(random, 1)
+            }
+            update()
+        })
+
+
+
 
 
         //TODO: Count the element types and total and print to interface
-        const square = document.getElementById("sbutton")
+        const square = document.getElementById("sbutton").innerHTML
 
 
-        
+
         //Function to draw on canvas:
         function renderDrawings() {
             //Clear the rectangle
             ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-             document.addEventListener("keydown", event => {
-             if(event.code === "KeyC") {
-                addElement("circle")
-                console.log(renderDrawings)
-             } else if ("click", function() {
-                addElement("square");
-                })
-             })
-
             //TODO: Draw the elements on canvas:
-            ctx.fillRect(elements[0].x, elements[0].y, elements[0].width, elements[0].height)
+            elements.map((shape) => {
+                ctx.fillStyle = "#00b7c7"
+                ctx.fillRect(shape.x, shape.y, shape.width, shape.height)
+
+                ctx.fillStyle = "#be9500"
+                ctx.beginPath()
+                ctx.arc(shape.x, shape.y, shape.radius, 0, 2 * Math.PI)
+                ctx.fill()
+            })
+
+
 
             //Testprint:
             console.log("Currently drawing frames...")
             //Use requestAnimationFrame to re-run renderDrawings-function
             requestAnimationFrame(renderDrawings)
+            update
         }
         //Start drawing
         renderDrawings()
     </script>
 </body>
+
 </html>

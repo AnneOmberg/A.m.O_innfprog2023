@@ -14,7 +14,7 @@
             <h2>Controls</h2>
             <p><span class="buttonIllustration" id="sbutton">S</span> Add a square</p>
             <p><span class="buttonIllustration" id="cbutton" onclick="addElement('circle')">C</span> Add a circle</p>
-            <p><span class="buttonIllustration" id="rbutton">R</span> Remove random element</p>
+            <p><span class="buttonIllustration" id="rbutton">R</span> Remove a random element</p>
             <h2>Number of elements</h2>
             <ul>
                 <li>Squares: <span id="squareCount">0</span></li>
@@ -33,7 +33,7 @@
         canvas.height = 500
         const ctx = canvas.getContext("2d")
 
-        //gjør klar randomMinMax-funksjonen, helt lik som i pensum
+        //gjør klar randomMinMax-funksjonen, lik som i pensum
         function randomMinMax(min, max) {
             return Math.floor(Math.random() * (max - min + 1) + min)
         }
@@ -45,8 +45,42 @@
         let sCount = 0
         let cCount = 0
         let tCount = 0
-        let remove = 0 
+        
+        //Variabel for tid på spilltiden og tid per element        
+        const timer = {
+            duration: 0,
+            tidPerElement: 0
+        }
 
+        //funksjon for bruk av konkatinering til tid plassering      https://www.w3schools.com/jsref/met_document_createelement.asp      https://stackoverflow.com/posts/9423014/edit
+        const tid = document.createElement("h2")
+        tid.innerText = "Activity"
+        document.body.appendChild(tid)
+        document.body.appendChild(tid).style.marginLeft = "503px"
+        document.body.appendChild(tid).style.marginTop = "-70px"
+
+        const tidTaker = document.createElement("li")
+        document.body.appendChild(tidTaker)
+        tidTaker.innerText = "Timer: " + timer.duration + " s"
+        document.body.appendChild(tidTaker).style.marginLeft = "503px"
+
+        const tidPerElement = document.createElement("li")
+        document.body.appendChild(tidPerElement)
+        tidPerElement.innerText = "Time per shape: " + timer.tidPerElement + " s/shape"
+        document.body.appendChild(tidPerElement).style.marginLeft = "503px"
+
+        //Funsjon for å telle per sekund
+        setInterval(function () {
+            timer.duration++
+            timer.tidPerElement = tCount / timer.duration
+            //Listeupdate for duration
+            tidTaker.innerText = "Timer: " + timer.duration + " s"
+            //Listeupdate for tid per shape            
+            tidPerElement.innerText = "Time per shape: " + timer.tidPerElement.toFixed(2) + " s/shape"     // https://www.w3schools.com/jsref/jsref_tofixed.asp
+            update()
+        }, 1000)
+
+        //funksjon for å oppdatere per renderDrawing (60 hertz per second)
         function update() {
             tCount = elements.length
             document.getElementById("totalCount").innerHTML = tCount
@@ -65,7 +99,8 @@
                     type: type,
                     x: randomMinMax(0, canvas.width),
                     y: randomMinMax(0, canvas.height),
-                    width: 13,
+                    //Byttet mellom radius og høyde/bredde fra oppgavetekst, siden dette ble likere eksempelbilde
+                    width: 13,                                              
                     height: 13
                 })
             }
@@ -80,11 +115,20 @@
             update()
         }
 
-
-        //TODO: Function to remove random element:
-
+        //TODO: Function to remove random element:        
+        let remove = elements => elements.splice((Math.random() * elements.length), 1)
 
         //TODO: EventListeners to track user input:
+        //Funsjon for å bruke museklikk
+        document.getElementById("sbutton").addEventListener("click", function () {
+            pushElements("square")
+        })
+        document.getElementById("cbutton").addEventListener("click", function () {
+            pushElements("circle")
+        })
+        document.getElementById("rbutton").addEventListener("click", function () {
+            remove(elements)
+        })
         document.addEventListener("keydown", event => {
             if (event.code === "KeyC") {
                 pushElements("circle")
@@ -95,19 +139,13 @@
                 console.log(elements)
             }
             if (event.code === "KeyR") {
-                pushElements.splice(random, 1)
+                remove(elements)
             }
             update()
         })
 
-
-
-
-
         //TODO: Count the element types and total and print to interface
         const square = document.getElementById("sbutton").innerHTML
-
-
 
         //Function to draw on canvas:
         function renderDrawings() {
@@ -116,22 +154,20 @@
 
             //TODO: Draw the elements on canvas:
             elements.map((shape) => {
-                ctx.fillStyle = "#00b7c7"
+                ctx.fillStyle = "#188989"
                 ctx.fillRect(shape.x, shape.y, shape.width, shape.height)
 
-                ctx.fillStyle = "#be9500"
+                ctx.fillStyle = "#CE8E00"
                 ctx.beginPath()
                 ctx.arc(shape.x, shape.y, shape.radius, 0, 2 * Math.PI)
                 ctx.fill()
             })
 
-
-
             //Testprint:
             console.log("Currently drawing frames...")
             //Use requestAnimationFrame to re-run renderDrawings-function
             requestAnimationFrame(renderDrawings)
-            update
+            update()
         }
         //Start drawing
         renderDrawings()

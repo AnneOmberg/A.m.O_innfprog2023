@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ord - I - Ord</title>
+<style>
+    .master-grid {
+        width: 100%;
+        max-width: 85vw;
+        box-sizing: border-box;
+        grid-template-columns: 70% 30%;
+        grid-template-rows: 100px 50vh 50vh 100px;
+        grid-template-areas: 
+            'header header'
+            'randomWord correctWord'
+            'emptyWord correctWord'
+            'checkWord startGame'
+        ;
+    }
+
+button {
+    width: 30vw;
+    height: 10vw;
+}
+    #header {
+        width: 100%;
+        grid-area: 'header';
+    }
+    #randomWord {
+        width: 15vw;
+        grid-area: 'randomWord';
+    }
+    #emptyWord {
+        width: 20vw;
+        grid-area: 'emptyWord';
+    }
+    #checkWord {
+        grid-area: 'checkWord';
+    }
+    #startGame {
+        grid-area: 'startGame';
+    }
+</style>
+</head>
+    <body>
+        <div class="left">
+            <h1 id="header">Finn ord i ordet</h1>
+            <p id="randomWord"></p>
+        </hr>
+            <input id="emptyWord" disabled>
+            <button id="checkWord">Sjekk</button>
+            <button id="startGame">Start Spill</button>
+        </div>
+        <div class="right">
+            <h2>Gjettede ord</h2>
+
+        </div>
+        <script>
+            var randomWords=[
+                'judgment',
+                'tolerant',
+                'appetite',
+                'ceremony',
+                'dominate' ,
+                'conflict',
+                'rethoric',
+                'imperial',
+                'occasion'
+            ];
+            randomword = "";
+            correctWord ="";
+
+            function startGame() {
+                document.getElementById("emptyWord").disabled = false;
+
+                randomWord = randomWords[Math.floor(Math.random() * randomWords.length)];
+                randomWord.toUpperCase();
+                document.getElementById("randomWord").innerHTML = randomWord;
+            }           
+
+            document.getElementById("startGame").addEventListener("click", startGame);
+
+            function ceckWord() {
+                //console.log(randomword);
+            
+                var guessedWord = document.getElementById("emptyWord").value;
+                guessedWord.toUpperCase();
+                var guesedWordArray = guessedWord.split("");
+                var randomWordArray = randomWord.split("");
+            
+                //console.log(guessedWordArray);
+                //console.log(randomWordArray);
+
+                for( var gi = 0; gi < guessedWordArray.length; gi++) {
+                    for(ri = 0; ri < randomWordArray.length; ri++) {
+                        if(guessedWordArray[gi] == randomWordArray[ri]) {
+                            randomWordArray.splice(ri,1);
+                            break;
+                        }else {
+                        document.getElementById(emptyWord.value) = "";
+                        }
+                    }
+                }
+
+                if(correctWords.includes(guessedWord) == true) {
+                    document.getElementById(emptyWord.value) = "";
+                }else {
+                    correctWords.push(guessedWord);
+                    console.log(guessedWord);
+                }
+            }
+            document.getElementById("checkWord").addEventListener("click", checkWord);
+            
+        </script>
+    </body>
+</html>

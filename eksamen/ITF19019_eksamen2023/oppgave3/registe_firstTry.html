@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff register</title>
+    <link href="style.css" rel="stylesheet" media="screen" />
+</head>
+
+<body>
+    <header>
+        <h1>Staff Register</h1>
+    </header>
+    <main>
+        <section id="list">
+            <nav id="filter">
+                <p>Filter on position:</p>
+                <ul id="positionFilter">
+                    <li><button class="all active">All positions</button></li>
+                </ul>
+            </nav>
+            <h2 id="listHeader">Showing all Staff</h2>
+            <div id="staffList">
+
+            </div>
+        </section>
+        <section id="admin">
+            <div class="form">
+                <h2>Add staff</h2>
+                <p>
+                    <label for="firstname">Firstname</label>
+                    <input type="text" name="firstname" id="firstname" placeholder="Firstname" />
+                </p>
+                <p>
+                    <label for="lastname">Lastname</label>
+                    <input type="text" name="lastname" id="lastname" placeholder="Lastname" />
+                </p>
+                <p>
+                    <label for="position">Position</label>
+                    <select id="position" name="position">
+                        <!-- Skrivefeil i position => var opprinnelig postition(chatgpt hjalp med å finne denne typoen) -->
+
+                    </select>
+                </p>
+                <p>
+                    <label for="department">Department</label>
+                    <select id="department" name="department">
+
+                    </select>
+                </p>
+                <p>
+                    <label for="email">Email address</label><input type="email" name="email" id="email"
+                        placeholder="you@email.com" /></select>
+                </p>
+                <button id="saveStaff">Save staff member</button>
+            </div>
+            <div class="form">
+                <h2>Add position</h2>
+                <p>
+                    <label for="newPosition">Position</label><input type="text" name="newPosition" id="newPosition"
+                        placeholder="Position" />
+                </p>
+                <button id="savePosition" onClick="newPosition()">Save new position</button>
+            </div>
+            <div class="form">
+                <h2>Add department</h2>
+                <p>
+                    <label for="newDepartment">Department</label><input type="text" name="newDepartment"
+                        id="newDepartment" placeholder="Department" />
+                </p>
+                <button id="saveDepartment">Save new department</button>
+            </div>
+        </section>
+    </main>
+    <script>
+        //Array of staff objects
+        const staff = [
+            { firstname: "Bill", lastname: "Gates", position: "Director", department: "Administration", email: "bill@gates.net" }
+        ]
+
+        //Koble array med html elementer
+        //position.push("")
+
+        document.getElementById("position").innerHTML = `
+                        <option ${value = "Director"}>Director</option>
+                        <option ${value = "Team leader"}>Team leader</option>
+                        <option ${value = "Producer"}>Producer</option>
+                        <option ${value = "Engineer"}>Engineer</option>
+                        <option ${value = "Designer"}>Designer</option>`
+
+        document.getElementById("department").innerHTML = `
+                        <option ${value = "Administration"}>Administration</option>
+                        <option ${value}="Finances">Finances</option>
+                        <option ${value}="Human Resources">Human Resources</option>
+                        <option ${value}="Production">Production</option>`
+
+        const positionDropdown = document.getElementById("position")
+        positions.forEach((position) => {
+            const option = document.createElement("option")
+            option.value = position
+            option.textContent = position
+            posiDropdown.appendChild(option)
+        })
+
+        const depaDropdown = document.getElementById("department")
+        departments.forEach((department) => {
+            const option = document.createElement("option")
+            option.value = department
+            option.textContent = department
+            depaDropdown.appendChild(option)
+        })
+
+        staffmember = document.createElement("article")
+        staffmember.setAttribute("id", "staffmember-0")
+
+        //Funksjon til save staff knappen
+        const saveStaffButton = document.getElementById("saveStaff")
+        saveStaffButton.addEventListener("click", saveStaffMember)
+
+        function saveStaffMember() {
+            const firstname = document.getElementById("firstname").value
+            const lastname = document.getElementById("lastname").value
+            const position = document.getElementById("position").value
+            const department = document.getElementById("department").value
+            const email = document.getElementById("email").value     
+
+            const newStaffMember = {
+                firstname: firstname,
+                lastname: lastname,
+                position: position,
+                department: department,
+                email: email
+            }
+
+            staff.push(newStaffMember)
+
+            displayStaffList()
+
+            document.getElementById("firstname").value = ""
+            document.getElementById("lastname").value = ""
+            document.getElementById("position").value = ""
+            document.getElementById("department").value = ""
+            document.getElementById("email").value = ""
+            console.log(saveStaffMember)
+        }
+
+            function displayStaffList() {
+                const staffListDiv = document.getElementById("staffList")
+                //tømme nåværende innhold
+                staffListDiv.innerHTML = ""
+
+                staff.forEach((staffMember, index) => {
+                    const staffMemberDiv = document.createElement("div")
+                    staffMemberDiv.textContent = `${staffMember.firstname} ${staffMember.lastname} - ${staffMember.position}, ${staffMember.department}`
+                    staffListDiv.appendChild(staffMemberDiv)
+                });
+            }
+
+        //Array of available positions
+        const positions = ["Director", "Team leader", "Producer", "Engineer", "Designer"]
+
+
+        //Array of available departments
+        const departments = ["Administration", "Human Resources", "Production", "Finances"]
+
+        //Variabler som kobler mot html
+        const newPosi = document.getElementById("newPosition")
+        const posiButton = document.getElementById("savePosition")
+
+        //Få posisjoner til å registrere
+        function addPosi() {
+            const newPosition = newPosi.value
+
+            positions.push(newPosition)
+
+            newPosi.value = ""
+        }
+
+        document.getElementById("position").innerHTML = `
+                        <option ${value = "Director"}>Director</option>
+                        <option ${value = "Team leader"}>Team leader</option>
+                        <option ${value = "Producer"}>Producer</option>
+                        <option ${value = "Engineer"}>Engineer</option>
+                        <option ${value = "Designer"}>Designer</option>`
+
+        document.getElementById("department").innerHTML = `
+                        <option ${value = "Administration"}>Administration</option>
+                        <option ${value}="Finances">Finances</option>
+                        <option ${value}="Human Resources">Human Resources</option>
+                        <option ${value}="Production">Production</option>`
+
+        posiButton.addEventListener("click", addPosi)
+
+    </script>
+</body>
+
+</html>

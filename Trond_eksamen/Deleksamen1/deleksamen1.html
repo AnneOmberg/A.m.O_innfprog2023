@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InnfProg 2020 | Deleksamen 1</title>
+    <style>
+        section { height: 100vh; display: block; overflow:hidden; padding: 0; position: relative; background-image: url(1383.jpg); background-position: bottom center; background-size: 100% auto; }
+        h1 { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #b61010; color: #fff; font-size: 5rem; padding: 1rem; }
+    </style>
+</head>
+<body>
+    <!-- 
+    * Deleksamen1 - Feilsøkng
+    * Innføring i programmering
+    * HIOF
+    * Trond Vebjørn Omberg, 193211
+     -->
+    <section id="fill">
+        <h1 id="text">Fix me!</h1>
+    </section>
+    <script>
+        //Først setter vi noen variabler
+        var success = 1383;
+        var twofivefive = "0, 255, 0";
+        // 1 - Jeg satte på en avsluttende "
+
+        var action = "Mad";
+        var person = "Yo";
+
+        var error_margin = 97;
+        
+
+        var double_margin = error_margin * 2, success = success + double_margin;
+        // 7 - satte på , for å skille mellom verdiene.
+        //Så sjekker vi om vi har løst alle feilene
+        // 2 - Satte på en ekstra / for å starte kommentaren.
+        if(success == 1577) {
+            // 5 - Satte på en ekstra = fordi den angir nye verdier dersom man kun bruker en
+            person = person + "u";
+            action = action + "e";
+        // 4 - Fjernert en ekstra +
+        } else {
+            twofivefive = "255, 0, 0";
+        }
+        
+        //Til slutt endrer vi til riktige verdier
+        document.getElementById("fill").style.backgroundImage = "url(" + success + ".jpg)";
+        // 3 - Endret fra getElementByIDE til getElementById, 6 - Skrivefeil sucess - success, 10 - endret fra style,backgroundImage til style.backgroundImage
+        document.getElementById("text").style.backgroundColor = "rgb(" + twofivefive + ")";
+        // 9 - endret fra txet til text
+        document.getElementById("text").innerHTML = person + " " + action + " it!";
+        // 8 - satte på + for å gi strengen en sammenheng.
+    </script>
+</body>
+</html>

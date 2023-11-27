@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Simple JavaScript Snake Game</title>
+	
+	<style>
+	canvas {
+		display: block;
+		position: absolute;
+		border: 5px solid  #009BFF;
+		margin: auto;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		left: 0;
+	}
+	</style>
+</head>
+<body>
+
+<!--     
+	* Deleksamen3 - Modifisere og tilpasse
+    * Innføring i programmering
+    * Snake 
+    * HIOF
+    * Trond Vebjørn Omberg, 193211
+ -->
+
+<script>
+
+// defined column and row size
+//Endre størrelse fra 26 til 30 (Oppg. 3)
+var COLS = 30, repeat;
+var ROWS = 30, repeat;
+
+// defined field types: empty, snake, fruit and poison
+var EMPTY = 0;
+var SNAKE = 1;
+var FRUIT = 2;
+//legge til poison (Oppg. 8)
+var POISON = 3;
+
+// defined directions
+var LEFT  = 0;
+var UP    = 1;
+var RIGHT = 2;
+var DOWN  = 3;
+
+// defined key presses
+var KEY_LEFT  = 37;
+var KEY_UP    = 38;
+var KEY_RIGHT = 39;
+var KEY_DOWN  = 40;
+var KEY_SPACE = 32;
+
+var score;	 //game score
+var highscore;
+var paused; // boolean, true if game paused 
+
+var canvas; // canvas element 
+var ctx;  // context element
+var frames; // key frames (how often the animation is updated)
+var keystate; //key state (if a key is pressed or not)
+
+// game grid array
+// cells stores a matrix (rows * cols array) of all cells of the grid
+// each cell can be EMPTY, FRUIT, POISON or SNAKE
+var grid = {
+	width: null,  
+	height: null, 
+	cells: null,  
+};
+
+// snake array
+// stores the cell there the head is right now
+// stores all the cells of the snake body (array).
+// stores the current position of the snake (UP, DOWN, LEFT, RIGHT)
+var snake = {
+	direction: null, 
+	head: null,		 
+	body: null,	
+};
+
+
+
+// intitialize game grid
+// adds all cells to the grid and sets them to EMPTY
+function initGrid(){
+		grid["width"] = COLS; //define how many cells the game is wide
+		grid["height"] = ROWS; // define how many cells the game is high
+		grid["cells"] = []; //create an empty array to store all cells
+
+		// fill the cells array with empty cells for cols*rows
+		/* e.g. if we had 4 rows * 4 cols 
+		grid["cells"] = [[0,0,0,0],
+						 [0,0,0,0],
+						 [0,0,0,0],
+						 [0,0,0,0]]
+		*/
+		for (var x=0; x < COLS; x++) {
+			grid["cells"].push([]);
+			for (var y=0; y < ROWS; y++) {
+				grid["cells"][x].push(EMPTY);
+			}
+		}
+
+}
+
+// add a value to a cell in the grid, can be EMPTY, FRUIT, POISON or SNAKE
+function assignValueToGrid(val,x,y)
+{
+	// x is the column and y the row of the cell
+	grid["cells"][x][y] = val;
+}
+
+// retrieve the value of a cell in the grid, can be EMPTY, FRUIT, POISON or SNAKE
+function getValueFromGrid(x,y)
+{
+	// x is the column and y the row of the cell
+	return grid["cells"][x][y];
+}
+
+// creates a snake on the game grid
+// set initial position and cell for the snake
+// empties the body (snake has only a head in the beginning)
+function initSnake(direction, x, y) {
+		snake["direction"] = direction; // could by LEFT, RIGHT, UP, DOWN
+		snake["body"] = []; //snake body is an empty array in the beginning
+		moveSnakeHead(x,y); //place snake on the grid at position (x,y)
+}
+
+// move the snake to the next cell
+// add the cell to the snake body (list of cells)
+// store the cell as snake head
+function moveSnakeHead(x, y) {	
+		snake["body"].unshift({x:x, y:y}); // add a cell has key-value pair {1:1,1:1}....{COLS:COLS,ROWS:ROWS} to the front of the body
+		snake["head"] = snake["body"][0]; // store the first cell of the body as head
+}
+
+// remove the last cell of the snake from the snake body
+function removeSnakeTail(){
+	return snake["body"].pop();
+}
+
+// place a FRUIT in a random empty cell
+function setFood() {
+	var empty = []; // temporary array that stores empty cells there food can be placed
+    
+    // we can only place fruit on an empty cell
+	// go through the grid and find all empty cells
+	// save in array called empty
+	for (var x=0; x < grid["width"]; x++) {
+		for (var y=0; y < grid["height"]; y++) {
+			if (getValueFromGrid(x, y) === EMPTY) {
+				empty.push({x:x, y:y}); // if the cell is empty, save it to the array
+			}
+		}
+	}
+    
+    // select a random cell from all found empty cells
+    var randpos = empty[Math.round(Math.random()*(empty.length - 1))];
+    // set a fruit in the selected random cell stored in randpos
+	assignValueToGrid(FRUIT, randpos["x"], randpos["y"]);
+
+	// velg en ny tilfeldig celle fra alle tomme celler funnet (Oppg. 5)
+    var secrandpos = empty[Math.round(Math.random()*(empty.length - 1))];
+    // sett en frukt i den tilfeldige valgte cellen lagret i secrandpos
+	
+	//Legge til en if test som sjekker scoren, og plasserer mengden med mat deretter. (Oppg. 6)
+	if (score % 5 === 0) {
+		assignValueToGrid(FRUIT, secrandpos["x"], secrandpos["y"]);
+		
+	}
+
+}
+
+//Opprette en ny funksjon som plasserer forgiftet mat (Oppg. 9)
+function setPoison() {
+	var unoccupied = []; // midlertidig array som lagrer tomme celler hvor gift kan bli plassert
+    
+    // Vi kan kun plassere gift på tomme celler
+	// Se gjennom rutenettet, og finn en ledig celle
+	// Lagre i arrayen kalt unoccupied
+	for (var a=0; a < grid["width"]; a++) {
+		for (var b=0; b < grid["height"]; b++) {
+			if (getValueFromGrid(a, b) === EMPTY) {
+				unoccupied.push({a:a, b:b}); // hvis cellen er ledig, lagre den i arrayen
+			}
+		}
+	}
+
+	// velg en ny tilfeldig celle fra alle tomme celler funnet
+    var poisoionedBlock = unoccupied[Math.round(Math.random()*(unoccupied.length - 1))];
+    // sett en forgiftet frukt i den tilfeldige valgte cellen lagret i imposter
+	assignValueToGrid(POISON, poisoionedBlock["a"], poisoionedBlock["b"]);
+	//Legge til en if test som sjekker scoren, og plasserer mengden med mat deretter.
+	
+	//Hvis score % 5 tilsvarer 0
+	if (score % 5 === 0) {
+		//Legge til en ny forgiftet frukt på en tilfeldig plassering (Oppg. 10)
+		//Opprette en variabel som representerer den forgiftede frukten
+		var comrade = unoccupied[Math.round(Math.random()*(unoccupied.length - 1))];
+		//plasser den forgiftede maten
+		assignValueToGrid(POISON, comrade["a"], comrade["b"]);
+	}
+
+}
+
+
+// main function called once when page is loaded
+function main() {
+    
+  	// * DO NOT CHANGE THE CODE BELOW *
+	// all stuff needed to make the game work
+	// create a game canvas 
+		canvas = document.createElement("canvas");
+		canvas.width = COLS*20;
+		canvas.height = ROWS*20;
+		ctx = canvas.getContext("2d");
+		document.body.appendChild(canvas);
+		ctx.font = "12px Helvetica";
+		frames = 0;
+		keystate = {};
+		
+		// add key listeners
+		document.addEventListener("keydown", function(evt) {
+			keystate[evt.keyCode] = true;
+		});
+		document.addEventListener("keyup", function(evt) {
+			delete keystate[evt.keyCode];
+		});
+	// * DO NOT CHANGE THE CODE ABOVE	*
+
+
+    // setup the game elements
+    init();
+    // start the game loop
+	loop();
+}
+
+
+// initialises the game elements
+function init() {
+    // empty score
+	score = 0;
+    // empty all cells in the game grid (everything is set to empty)
+	initGrid();
+
+    // create a snake in the bottom center of the grid going upwards
+	var sp = {x:Math.floor(COLS/2), y:ROWS-1}; // find the bottom middle cell
+	initSnake(UP, sp["x"], sp["y"]); // create a snake at sp going upwards
+	assignValueToGrid(SNAKE, sp["x"], sp["y"]); // save the snake position in the game grid
+
+    // place a FRUIT on the canvas
+	setFood();
+	//sett på et POISON element
+	setPoison();
+}
+
+// game loop to handle snake position & hit detection
+function loop() {
+    update();
+	draw();
+	
+	// magic that updates the canvas (https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
+	window.requestAnimationFrame(loop, canvas);
+}
+
+// update snake position and check for hit
+function update() {
+	// frame counter like a game timer
+	//Senker hastigheten til 50% (Oppg. 4)
+	frames=frames+0.5;
+
+    // test if space was pressed to pause/unpause the game
+    if (keystate[KEY_SPACE]) {
+        paused = !paused; // a pause switch
+    }  
+	// if the game is pause return without update
+    if(paused) return;
+
+
+    // get key presses and set snake direction
+	if (keystate[KEY_LEFT] && snake["direction"] !== RIGHT) {
+		snake["direction"] = LEFT;
+	}
+	if (keystate[KEY_UP] && snake["direction"] !== DOWN) {
+		snake["direction"] = UP;
+	}
+	if (keystate[KEY_RIGHT] && snake["direction"] !== LEFT) {
+		snake["direction"] = RIGHT;
+	}
+	if (keystate[KEY_DOWN] && snake["direction"] !== UP) {
+		snake["direction"] = DOWN;
+	}
+
+    // move snake every 7th frame 
+	// decides how often the canvas is updated;
+	// bigger number means slower game
+	// lower number means faster game
+	if (frames%7 === 0) {
+
+		// get current snake head position		
+		var newX = snake["head"]["x"];
+		var newY = snake["head"]["y"];	
+
+		// move head by one in x or y direction depending on direction
+		switch (snake["direction"]) {
+			case LEFT:
+				newX--;
+				break;
+			case UP:
+				newY--;
+				break;
+			case RIGHT:
+				newX++;
+				break;
+			case DOWN:
+				newY++;
+				break;
+		}
+
+        // start over if outside game grid or snake biting itself
+		//Endre slik at SNAKE kommer over på andre siden av kartet.
+		if (0 > newX || newX > grid["width"] -1 ||
+			0 > newY || newY > grid["height"] -1
+		) {
+			//Fjerne rammene, og tillate slangen å fortsette til andre siden av kartet (Oppg. 7)
+			//Angi bredden
+			newX = (newX + grid.width) % grid.width;
+			//Angi høyde
+			newY = (newY + grid.height) % grid.height;
+		} else if (getValueFromGrid(newX,newY) === SNAKE) {
+			return init();
+		} 
+
+        
+        // check if we found a fruit and the snake grows by one
+		if (getValueFromGrid(newX, newY) === FRUIT) {
+			score++; // increase score
+			setFood(); // display a new fruit
+		}else {
+            // if we did not find a fruit, we need to remove the tail of the snake, to keep the same length
+			var tail = removeSnakeTail(); // remove tail from snake
+			assignValueToGrid(EMPTY, tail["x"], tail["y"]); // empty cell on the grid there the tail was before
+		} 
+
+		//Sjekke om vi har funnet gift og resette kroppen (Oppg. 11)
+		if (getValueFromGrid(newX, newY) === POISON){
+			//Sette ut ny gift
+			setPoison();
+			
+			var l;
+			//telle opp antall celler slangen opptar
+			for (l = 0; l < snake["body"]; l++ ) {
+
+			removeSnakeTail(); //Fjerner kroppen
+			assignValueToGrid(EMPTY, l["x"], l["y"]); //setter verdien til EMPTY
+			}
+		}
+		moveSnakeHead(newX,newY); // store the new position of the snake head
+		assignValueToGrid(SNAKE,newX,newY); // mark the cell with the snake head in the grid
+	}
+}
+
+// draw all elements on the screen
+function draw() {
+	
+	var tw = canvas["width"]/grid["width"]; //cell with
+	var th = canvas["height"]/grid["height"]; //cell height
+    
+    // go through the grit and color each cell appropriately
+	for (var x=0; x < grid["width"]; x++) {
+		for (var y=0; y < grid["height"]; y++) {
+			
+			switch (getValueFromGrid(x, y)) {
+				case EMPTY:
+					ctx.fillStyle = "#fff"; //white color if empty
+					break;
+				case SNAKE:
+					ctx.fillStyle = "#228B22"; // dark grey color if snake / Satt på ny farge. Grønn. (Oppg. 1)
+					break;
+				case FRUIT:
+					ctx.fillStyle = "#FFFF00"; // blue color if fruit / Satt på ny farge. Gul (Oppg. 2)
+					break;
+				case POISON:
+					ctx.fillStyle = "#ff0000"; //Rød farge på gift (Oppg. 9)
+					break;
+			}
+			ctx.fillRect(x*tw, y*th, tw, th); // draw cell to canvas
+		}
+	}
+	
+	ctx.fillStyle = "#000"; // set text color to black 
+	ctx.fillText("SCORE: " + score, 10, canvas.height-10); // write score
+}
+
+
+//start the game
+main();
+</script>
+</body>
+</html>

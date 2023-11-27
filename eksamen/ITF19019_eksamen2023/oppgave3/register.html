@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,6 +78,33 @@
 
         //Array of available departments
         const departments = ["Administration", "Human Resources", "Production", "Finances"]
+
+        const staffCard = document.getElementById("staffList").innerHTML 
+        for (let i = 0; i < staff.length; i++) {
+            for (let key in staff[i]) {
+            console.log(`${key}: ${staff[i][key]}`)
+            document.getElementById("staffList").value
+            }            
+        }
+
+
+        document.getElementById("position").innerHTML = `
+                        <option ${value = "Director"}>Director</option>
+                        <option ${value = "Team leader"}>Team leader</option>
+                        <option ${value = "Producer"}>Producer</option>
+                        <option ${value = "Engineer"}>Engineer</option>
+                        <option ${value = "Designer"}>Designer</option>`
+
+        
+
+        document.getElementById("department").innerHTML = `
+                        <option ${value = "Administration"}>Administration</option>
+                        <option ${value}="Finances">Finances</option>
+                        <option ${value}="Human Resources">Human Resources</option>
+                        <option ${value}="Production">Production</option>`
+
+        
+
     </script>
 </body>
 </html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stein, Saks, Papir</title>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: blue;
+            text-align: center;
+            font-family: 'Libre Baskerville', serif;
+        }
+        h1 {
+            font-size: 3rem;
+        }
+        #gamearea {
+            width: 100%;
+            max-width: 800px;
+            background: lightskyblue;
+            margin: 20px auto;
+            padding: 20px;
+            border: 2px solid #ccc;
+            display: block;
+            overflow: hidden;
+        }
+        #winnertext {
+            background: #f3f3f3;
+            color: #333;
+            font-size: 2rem;
+            padding: 1rem;
+        }
+
+        #player {
+            width: 45%;
+            float: left;
+        }
+        #playerChoices {
+            display: flex;
+            justify-content: space-between;
+        }
+        #playerChoices img {
+            width: 25%;
+        }
+
+        #computer {
+            width: 45%;
+            float: right;
+        }
+        #computerChoice img {
+            width: 25%;
+        }
+        #playerChoices, #computerChoice {
+            margin: 20px 0;
+            padding: 20px 0;
+        }
+        #games {
+            width: 100%;
+            clear: both;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+            font-weight: bold;
+        }
+        #draw-box {
+            width: 100%;
+            clear: both;
+            padding-top: 20px;
+            border-top: 1px dotted #ccc;
+        }
+    </style>
+</head>
+<!-- 
+    * Deleksamen2 - Modifisering og tilpasning
+    * Innføring i programmering
+    * Stein, saks, papir, robot 
+    * HIOF
+    * Trond Vebjørn Omberg, 193211 
+-->
+<body>
+    <section id="gamearea">
+        <h1>Stein, Saks, Papir</h1>
+        <p id="games">Kamp nummer 1:</p>
+        <div id="winnertext">Spiller, gjør ditt valg...</div>
+
+        <div id="player">
+            <h2>Spiller</h2>
+            <div id="playerChoices" >
+                <!-- Oppgave: Legge til onclick="play('valg')" på valgene for å starte spillet -->
+                <img src="stein.png" id="stein" onclick="play('stein')"/>
+                <img src="saks.png" id="saks" onclick="play('saks')"/>
+                <img src="papir.png" id="papir" onclick="play('papir')"/>
+                <!-- Oppgave: Legge til robot som et alternativ -->
+                <img src="robot.png" id="robot" onclick="play('robot')" />
+            </div>
+            <p id="playerWins">Seire: 0</p>
+        </div>
+
+        <div id="computer">
+            <h2>Datamaskin</h2>
+            <div id="computerChoice">
+                <!-- Fylles ut når spiller har valgt -->
+            </div>
+            <p id="computerWins">Seire: 0</p>
+        </div>
+
+              <!-- Oppgave: Uavgjorte spill vises her -->
+        <div id="draw-box">
+            <p id="gameDraws">Uavgjorte spill: 0</p>
+        </div>      
+    </section>
+    
+
+
+    <script>
+        //Først deklarer jeg variabler vi trenger i spillet:
+        let computerChoice = "";
+        //Legge til variabel som tar imot valget til spiller.
+        let playerChoice = "['']";
+        let winner = "";
+        
+
+        //Tellere for antall ganger man har spilt/ vunnet:
+        let games = 1; //Matcher teksten "Kamp nummer 1"...
+        let playerWins = 0;
+        let computerWins = 0;
+        //Ny teller som teller uavgjorte spill
+        let gameDraws = 0;
+
+        //Array med mulige valg:
+        /* Oppgave: Legge til "robot" som et valg i arrayen */
+        let choices = ["stein", "saks", "papir", "robot"];
+
+        /* Funksjon for å sjekke vinner ------------------------
+         * Vi deklarerer en funksjon checkWinner som tar imot to
+         * parametere; computerChoice og playerChoice.
+         * Begge verdiene til disse parameterne kommer fra funksjonen play().
+         * Funksjonen skal sjekke hvilken spiller som vinner, og oppdatere
+         * tellerne basert på vinneren. */
+        function checkWinner(computerChoice, playerChoice) {
+            if(computerChoice == "stein") {
+                if(playerChoice == "papir") {
+                    winner = "Spiller";
+                    playerWins++;
+                } else if (playerChoice == "stein") {
+                    winner = "Uavgjort! Ingen";
+                    /* Oppgave: Plusse på 1 i gameDraws */
+                    gameDraws++;
+                } else {
+                    winner = "Datamaskinen";
+                    computerWins++;
+                }
+            }
+
+            if(computerChoice == "saks") {
+                //Legge til robot som vinner over saks
+                /* Oppgave: Legge til robot som en betingelse */
+                if(playerChoice == "stein" || playerChoice == "robot") {
+                    winner = "Spiller";
+                    playerWins++;
+                } else if (playerChoice == "saks") {
+                    winner = "Uavgjort! Ingen";
+                    /* Oppgave: Plusse på 1 i gameDraws */
+                    gameDraws++;
+                } else {
+                    winner = "Datamaskinen";
+                    computerWins++;
+                }
+            }
+
+            if(computerChoice == "papir") {
+                /* Oppgave: Legge til robot som en betingelse */
+                if(playerChoice == "saks" || playerChoice == "robot") {
+                    winner = "Spiller";
+                    playerWins++;
+                } else if (playerChoice == "papir") {
+                    winner = "Uavgjort! Ingen";
+                    /* Oppgave: Plusse på 1 i gameDraws */
+                    gameDraws++;
+                } else {
+                    winner = "Datamaskinen";
+                    computerWins++;
+                }
+            }
+            /* Oppgave: Sjekke hvem som vinner med robot */
+            //Hvis datamaskinen velger robot, skal følgende ting sjekkes:
+            if(computerChoice == "robot") {
+                //Hvis spilleren velger stein, 
+                if(playerChoice == "stein") {
+                    //vinner spilleren
+                    winner = "Spiller";
+                    //og det legges til poeng i playerWins
+                    playerWins++;
+                  //Eller hvis spilleren også velger robot,
+                } else if (playerChoice == "robot") {
+                    //vinner ingen, og det blir uavgjort
+                    winner = "Uavgjort! Ingen";
+                    //og det legges til poeng i gameDraws
+                    gameDraws++;
+                  //eller hvis spiller velger saks eller papir
+                } else {
+                    //skal datamaskinen vinne
+                    winner = "Datamaskinen";
+                    //og det legges tl poeng i computerWins.
+                    computerWins++;
+                }
+            }
+            
+            
+            /* Oppgave: Lage en if-test som sjekker hvem som vinner, og sette farge etter resultat */
+            if(winner === "Spiller") {
+                //Hvis spiller vinner, blir bakgrunnen grønn
+                document.getElementById("winnertext").style.backgroundColor = "green";
+            } else if(winner === "Uavgjort! Ingen") {
+                //Hvis ingen vinner, blir bakgrunnen gul.
+                document.getElementById("winnertext").style.backgroundColor = "yellow";
+            } else {
+                //Hvis datamaskinen vinner, blir fargen rød.
+                document.getElementById("winnertext").style.backgroundColor = "red";
+            }
+        }//End function checkWinner(computerChoice, playerChoice)
+        
+        /* FUNKSJON FOR Å UTFØRE ET SPILL --------------------------------------
+         * Vi oppretter en funksjon kalt play(). Denne kjøres når en spiller klikker på sitt valg.
+         * Funksjonen tar i mot en parameter, choice, som er en tekststreng som viser hva brukeren har valgt.
+         * Denne tekststrengen representerer en verdi i arrayen choices.
+         * Når funksjonen kjøres må den
+         * - øke antall spill med 1
+         * - skrive ut antall spill til #games
+         * - fjerne rammer fra spillerens valg i tidligere spill
+         * - legge til en ramme rundt spillerens valg for dette spillet
+         * - velge en tilfeldig verdi for datamaskinen
+         * - vise datamaskinens valg i #computerChoice
+         * - kjøre en test som sjekker om spillerens valg slår datamaskinens valg, og oppdatere tellerne
+         * - skrive ut hvem som vinner
+         * - skrive ut den oppdaterte telleren i henholdsvis #playerWins eller #computerWins
+         */
+        function play(playerChoice) {
+
+            //Øk antall spill med 1:
+            games++;
+            //Skriv ut til #games:
+            document.getElementById("games").innerHTML = "Kamp nummer " + games + ":";
+            //Legg til en ramme rundt brukerens valg for dette spillet:
+            document.getElementById(playerChoice).border = 3;
+            
+            /* Oppgave: Effektiviser eksisterende kode */
+            //Fjern rammer fra tidligere valg:
+            
+            //Kommentere ut gammel kode
+            /*
+            document.getElementById("stein").border = 0;
+            document.getElementById("saks").border = 0;
+            document.getElementById("papir").border = 0;
+            //Legge inn test-element for robot
+            document.getElementById("robot").border = 0;
+            */
+
+            //Legge inn en for-loop for å resette tidligere valg
+            //Telle gjennom valgene
+            for(let x = 0; x < choices.length; x++) {
+                //Ny variabel som representerer valg-elementene
+                let y = document.getElementById(choices[x]).border;
+                //Hvis kant-linjen er større eller lik 1
+                if(y.border >= 1) {
+                    //Skal kant-linjen settes til 0
+                    y.border = 0;
+                }
+                //console.log(y);
+            }
+
+            /* Oppgave: Legge på en timeout funksjon, og flytte eksisterende kode inn */
+            setTimeout(function () { 
+                //Utvalg av tilfeldig verdi fra arrayen choices til datamaskin:
+                computerChoice = choices[Math.floor(Math.random() * choices.length)]; 
+
+                //Skriv ut bilde av datamaskinens valg:
+                document.getElementById("computerChoice").innerHTML = "<img src='" + computerChoice + ".png' alt='" + computerChoice + "' />";
+
+                //Tester for å se hvem som vinner.
+                checkWinner(computerChoice, playerChoice);
+
+                //Skriv ut tekst om vinneren til #winnertext:
+                document.getElementById("winnertext").innerHTML = winner + " vinner!";
+
+                //Oppdater tellere
+                document.getElementById("playerWins").innerHTML = "Seire: " + playerWins;
+                document.getElementById("computerWins").innerHTML = "Seire: " + computerWins;
+                document.getElementById("gameDraws").innerHTML = "Uavgjorte spill: " + gameDraws;
+
+            }, 500); //End setTimeout
+
+        }//End function play(playerChoice)
+    </script>
+    <p><small><div>Icons made by <a href="https://www.flaticon.local/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.local/" title="Flaticon">www.flaticon.local</a></div></small></p>
+</body>
+</html>

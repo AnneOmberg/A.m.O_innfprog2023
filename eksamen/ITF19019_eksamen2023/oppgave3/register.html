@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Staff register</title>
     <link href="style.css" rel="stylesheet" media="screen" />
 </head>
+
 <body>
     <header>
         <h1>Staff Register</h1>
@@ -20,7 +22,7 @@
             </nav>
             <h2 id="listHeader">Showing all Staff</h2>
             <div id="staffList">
-                
+
             </div>
         </section>
         <section id="admin">
@@ -32,35 +34,39 @@
                 </p>
                 <p>
                     <label for="lastname">Lastname</label>
-                    <input type="text" name="lastname" id="lastname" placeholder="Lastname" /></p>
+                    <input type="text" name="lastname" id="lastname" placeholder="Lastname" />
+                </p>
                 <p>
                     <label for="position">Position</label>
                     <select id="position" name="postition">
-                       
+
                     </select>
                 </p>
                 <p>
                     <label for="department">Department</label>
                     <select id="department" name="department">
-                        
+
                     </select>
                 </p>
                 <p>
-                    <label for="email">Email address</label><input type="email" name="email" id="email" placeholder="you@email.com" /></select>
+                    <label for="email">Email address</label><input type="email" name="email" id="email"
+                        placeholder="you@email.com" /></select>
                 </p>
                 <button id="saveStaff">Save staff member</button>
             </div>
             <div class="form">
                 <h2>Add position</h2>
                 <p>
-                    <label for="newPosition">Position</label><input type="text" name="newPosition" id="newPosition" placeholder="Position" />
+                    <label for="newPosition">Position</label><input type="text" name="newPosition" id="newPosition"
+                        placeholder="Position" />
                 </p>
                 <button id="savePosition" onClick="newPosition()">Save new position</button>
             </div>
             <div class="form">
                 <h2>Add department</h2>
                 <p>
-                    <label for="newDepartment">Department</label><input type="text" name="newDepartment" id="newDepartment" placeholder="Department" />
+                    <label for="newDepartment">Department</label><input type="text" name="newDepartment"
+                        id="newDepartment" placeholder="Department" />
                 </p>
                 <button id="saveDepartment">Save new department</button>
             </div>
@@ -69,7 +75,7 @@
     <script>
         //Array of staff objects
         const staff = [
-            {firstname: "Bill", lastname: "Gates", position: "Director", department: "Administration", email: "bill@gates.net"},
+            { firstname: "Bill", lastname: "Gates", position: "Director", department: "Administration", email: "bill@gates.net" },
         ]
 
         //Array of available positions
@@ -77,6 +83,41 @@
 
         //Array of available departments
         const departments = ["Administration", "Human Resources", "Production", "Finances"]
+
+        let staffList = ""
+        staff.map(category => {
+            staffList
+            += 
+            `<article class="membercard" id="staffmember-0">
+            <h3>${category.lastname}, ${category.firstname}</h3>
+            <p class="metainfo">
+                <img src="posicon.png" alt="position: "> ${category.position}
+                <img src="depicon.png" alt="department: "> ${category.department}
+            </p><p><a href="${category.email}">
+            <img src="mailicon.png"> Send mail to ${category.firstname}</a></p>
+            </article>`
+        })
+        document.getElementById("staffList").innerHTML = staffList
+
+        let positionFilter = ""
+        positions.map(category => {positionFilter +=
+            `<li><button class="${category}">${category}</button></li>`
+        })
+        document.getElementById("positionFilter").innerHTML = positionFilter
+
+        let posiDropDown
+        posiDropDown.map(position => {
+            `<option ${value="Director"}>Director</option>
+            <option ${value}="Team leader">Team leader</option>
+            <option ${value}="Producer">Producer</option>
+            <option ${value}="Engineer">Engineer</option>
+            <option ${value}="Designer">Designer</option>`
+        })
+        document.getElementById("position").innerHTML = posiDropDown
+        console.log(posiDropDown)
+
+
     </script>
 </body>
+
 </html>

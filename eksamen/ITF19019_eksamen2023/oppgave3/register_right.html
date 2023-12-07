@@ -60,7 +60,8 @@
                     <label for="newPosition">Position</label><input type="text" name="newPosition" id="newPosition"
                         placeholder="Position" />
                 </p>
-                <button id="savePosition" onClick="newPosition()">Save new position</button>
+                <!-- //Tok vekk onclick -->
+                <button id="savePosition">Save new position</button>
             </div>
             <div class="form">
                 <h2>Add department</h2>
@@ -80,15 +81,17 @@
 
         //Array of available positions
         const positions = ["Director", "Team leader", "Producer", "Engineer", "Designer", "All positions"]
-
+        positions.sort()
         //Array of available departments
         const departments = ["Administration", "Human Resources", "Production", "Finances"]
+        departments.sort()
 
+        function update() {
         let staffList = ""
         staff.map(category => {
             staffList
-            += 
-            `<article class="membercard" id="staffmember-0">
+                +=
+                `<article class="membercard" id="staffmember-0">
             <h3>${category.lastname}, ${category.firstname}</h3>
             <p class="metainfo">
                 <img src="posicon.png" alt="position: "> ${category.position}
@@ -98,25 +101,55 @@
             </article>`
         })
         document.getElementById("staffList").innerHTML = staffList
+        }
+        update()
 
         let positionFilter = ""
-        positions.map(category => {positionFilter +=
+        positions.map(category => {
+            positionFilter +=
             `<li><button class="${category}">${category}</button></li>`
         })
         document.getElementById("positionFilter").innerHTML = positionFilter
 
         let posiDropDown = ""
-        positions.map(position => {posiDropDown +=
+        positions.map(position => {
+            posiDropDown +=
             `<option value="${position}">${position}</option>`
         })
         document.getElementById("position").innerHTML = posiDropDown
 
+        
+
         let depaDropDown = ""
-        //what the fuck
-        departments.map(department => {depaDropDown +=
+        departments.map(department => {
+            depaDropDown +=
             `<option value="${department}">${department}</option>`
+            console.log(department)
         })
         document.getElementById("department").innerHTML = depaDropDown
+
+        document.getElementById("saveStaff").addEventListener("click", function () {
+            const newStaffMember = {
+                firstname: document.getElementById("firstname").value,
+                lastname: document.getElementById("lastname").value,
+                position: document.getElementById("position").value,
+                department: document.getElementById("department").value,
+                email: document.getElementById("email").value,
+            }            
+            console.log(newStaffMember)
+            console.log(staff)
+            staff.push(newStaffMember)
+            update()
+        })
+        document.getElementById("savePosition").addEventListener("click", function () {
+        })
+        
+        document.getElementById("savePosition").addEventListener("click", function newPosition() {
+            const savePosi = document.getElementById("newPosition").value
+            console.log(savePosi)
+            positions.push(savePosi)
+            update()
+        })
 
 
     </script>
